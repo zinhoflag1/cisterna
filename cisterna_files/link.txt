@@ -1,0 +1,5 @@
+https://imasters.com.br/back-end/aprenda-a-usar-o-restful-com-php-e-slim-framework
+
+https://amirkamizi.com/blog/php-simple-rest-api
+
+https://code.tutsplus.com/how-to-build-a-simple-rest-api-in-php--cms-37000t

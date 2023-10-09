@@ -1,0 +1,11 @@
+
+#########  Pendência Projeto Cisterna ########
+
+# sincronizar base de dados no sdc
+
+# interface de pesquisa de dados
+
+# levantar os filtros para pesquisa ( básico )
+
+# exportar para excel
+

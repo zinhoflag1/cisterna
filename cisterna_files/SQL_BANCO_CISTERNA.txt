@@ -1,0 +1,12 @@
+
+# get id telefone
+
+set @id_tel = "3199111";
+create if not exists database cisterna.@id_telefone;
+
+#tbl_cadastro
+create if not exists tbl_cadastro
+id
+..
+
+
