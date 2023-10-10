@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="vendor\twbs\bootstrap\dist\css\bootstrap.min.css">
   <!-- Filepond stylesheet -->
-  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  <link href="node_modules\filepond\dist\filepond.css" rel="stylesheet">
 
   <title>Projeto - GMG/CEDEC</title>
 </head>
@@ -19,23 +19,10 @@
   <div class="container">
     <div class="row p-2">
       <div class="col-12 p-3">
-        <form action="#" method="post" enctype="multipart/form-data" name="frm" id="frm">
+        
+      <a class="btn btn-primary" href="view/config/config.php">Admin</a>
 
-          <label>Nome</label>
-          <input class="form form-control" type="text" name="nome">
-
-          <br>
-          <label>CPF</label>
-          <input class="form form-control" type="text" name="cpf">
-
-          <br>
-          <!-- We'll transform this input into a pond -->
-          <input type="file" name="img[]" class="filepond img" multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="4">
-
-          <br>
-          <input class="btn btn-success" type="submit" name="btn" value="Salvar">
-
-        </form>
+      <a class="btn btn-primary" href="view/cadastro.php">Cadastro</a>
 
 
       </div>
@@ -47,24 +34,26 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="node_modules\jquery\dist\jquery.min.js"></script>
+  <script src="node_modules\popper.js\dist\umd\popper.min.js"></script>
+  <script src="vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script>
   <!-- Load FilePond library -->
 
-  <script src="node_modules/filepond/dist/filepond.min.js"></script>
-  <script src="node_modules/filepond/dist/filepond.jquery.js"></script>
-  <link href="node_modules/filepond/dist/filepond.css" rel="stylesheet" />
-  <link href="node_modules/filepond/dist/filepond-plugin-image-preview.min.css" rel="stylesheet" />
-  <script src="node_modules/filepond/dist/filepond-plugin-image-preview.min.js"></script>
-  <script src="node_modules/filepond/dist/filepond-plugin-file-validate-size.min.js"></script>
-  <script src="node_modules/filepond/dist/filepond-plugin-file-rename.js"></script>
-  <script type='modulo' src="node_modules/filepond/dist/locale/pt-br.js"></script>
+  <script src="node_modules\filepond\dist\filepond.min.js"></script>
+  <script src="node_modules\jquery-filepond\filepond.jquery.js"></script>
+
+  <link href="node_modules\filepond\dist\filepond.css" rel="stylesheet" />
+  <link href="node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.css" rel="stylesheet" />
+  <script src="node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.js"></script>
+  <script src="node_modules\filepond-plugin-file-validate-size\dist\filepond-plugin-file-validate-size.min.js"></script>
+  <script src="node_modules\filepond-plugin-file-rename\dist\filepond-plugin-file-rename.js"></script>
+  <script type='modulo' src="node_modules\filepond\locale\pt-br.js"></script>
 
   <script>
-    $.fn.filepond.registerPlugin(FilePondPluginImagePreview);
-    //$.fn.filepond.registerPlugin(FilePondPluginImageValidateSize);
+
+
     $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
+    //$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
     //$.fn.filepond.registerPlugin(FilePondPluginFileRename);
 
     $.fn.filepond.setDefaults({
