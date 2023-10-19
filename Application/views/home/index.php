@@ -1,5 +1,6 @@
+
 <!doctype html>
-<html lang="en">
+<html lang="pt-Br">
 
 <head>
   <!-- Required meta tags -->
@@ -19,10 +20,51 @@
   <div class="container">
     <div class="row p-2">
       <div class="col-12 p-3">
-        
-      <a class="btn btn-primary" href="view/config/config.php">Admin</a>
+        <a class="btn btn-primary btn-sm" href="admin">Admin</a>
+        <a class="btn btn-primary btn-sm" href="cadastro">Cadastro</a>
 
-      <a class="btn btn-primary" href="view/cadastro.php">Cadastro</a>
+        <div class="row p-2">
+          <div class="col-6 text-center">
+            Total de Registro Cadastrados<br>
+            <h3><?=count($data['total_registros'])?></h3>
+          </div>
+          <div class="col-6">
+            -
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-12 responsive">
+
+            <table class="table table-bordered table-striped table-condensend table-sm">
+              <tr>
+                <td>#</td>
+                <td>Nome</td>
+                <td>CPF</td>
+                <td>Renda Familiar</td>
+                <td>Municipio</td>
+                <td>Comunidade</td>
+              </tr>
+
+              <?php
+
+                foreach ($data['total_registros'] as $key => $registro) {
+                  print "<td>".($key+1)."</td>";
+                  print "<td>".$registro['nome']."</td>";
+                  print "<td>".$registro['cpf']."</td>";
+                  print "<td>".$registro['renda_total']."</td>";
+                  print "<td>".$registro['municipio']."</td>";
+                  print "<td>".$registro['comunidade']."</td>";
+                  
+                }
+
+              ?>
+
+            </table>
+
+          </div>
+        </div>
 
 
       </div>
@@ -50,8 +92,6 @@
   <script type='modulo' src="node_modules\filepond\locale\pt-br.js"></script>
 
   <script>
-
-
     $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
     //$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
     //$.fn.filepond.registerPlugin(FilePondPluginFileRename);
