@@ -8,14 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="vendor\twbs\bootstrap\dist\css\bootstrap.min.css">
+  <link rel="stylesheet" href="..\vendor\twbs\bootstrap\dist\css\bootstrap.min.css">
   <!-- Filepond stylesheet -->
-  <link href="node_modules\filepond\dist\filepond.css" rel="stylesheet">
+  <link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet">
 
   <title>Projeto - GMG/CEDEC</title>
 </head>
 
 <body>
+
 
   <div class="container">
     <div class="row p-2">
@@ -76,20 +77,20 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="node_modules\jquery\dist\jquery.min.js"></script>
-  <script src="node_modules\popper.js\dist\umd\popper.min.js"></script>
-  <script src="vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script>
+  <script src="..\node_modules\jquery\dist\jquery.min.js"></script>
+  <script src="..\node_modules\popper.js\dist\umd\popper.min.js"></script>
+  <script src="..\vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script>
   <!-- Load FilePond library -->
 
-  <script src="node_modules\filepond\dist\filepond.min.js"></script>
-  <script src="node_modules\jquery-filepond\filepond.jquery.js"></script>
+  <script src="..\node_modules\filepond\dist\filepond.min.js"></script>
+  <script src="..\node_modules\jquery-filepond\filepond.jquery.js"></script>
 
-  <link href="node_modules\filepond\dist\filepond.css" rel="stylesheet" />
-  <link href="node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.css" rel="stylesheet" />
-  <script src="node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.js"></script>
-  <script src="node_modules\filepond-plugin-file-validate-size\dist\filepond-plugin-file-validate-size.min.js"></script>
-  <script src="node_modules\filepond-plugin-file-rename\dist\filepond-plugin-file-rename.js"></script>
-  <script type='modulo' src="node_modules\filepond\locale\pt-br.js"></script>
+  <link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet" />
+  <link href="..\node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.css" rel="stylesheet" />
+  <script src="..\node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.js"></script>
+  <script src="..\node_modules\filepond-plugin-file-validate-size\dist\filepond-plugin-file-validate-size.min.js"></script>
+  <script src="..\node_modules\filepond-plugin-file-rename\dist\filepond-plugin-file-rename.js"></script>
+  <script type='modulo' src="..\node_modules\filepond\locale\pt-br.js"></script>
 
   <script>
     $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);

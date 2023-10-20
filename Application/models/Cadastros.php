@@ -6,6 +6,9 @@ use Application\core\Database;
 use PDO;
 class Cadastros
 {
+
+
+
   /** Poderiamos ter atributos aqui */
 
   /**
@@ -35,6 +38,22 @@ class Cadastros
     ));
 
     return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+/**
+ * Undocumented function
+ *
+ * @param [type] $cadastro
+ * @return void
+ */
+  public static function store($cadastro) {
+
+    var_dump($cadastro);
+
+    $conn = new Database();
+
+    $resut = $conn->executeQuery('insert into cadastros ('.$cadastro.')');
+
   }
 
 }

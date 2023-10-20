@@ -2,9 +2,20 @@
 
 namespace Application\core;
 
+require_once 'php-activerecord/ActiveRecord.php';
+
 use PDO;
 class Database extends PDO
 {
+
+   
+   ActiveRecord\Config::initialize(function($cfg)
+   {
+       $cfg->set_model_directory('models');
+       $cfg->set_connections(array(
+           'development' => 'mysql://username:password@localhost/database_name'));
+   });
+
   // configuração do banco de dados
   private $DB_NAME = 'cisterna10';
   private $DB_USER = 'root';

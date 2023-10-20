@@ -22,7 +22,7 @@
       </div>
         <h4 class="text-center">Formulário de pesquisa para caracterização técnica</h4><br><br>
         <h7><b>Dados do responsável pelo imóvel</b></h7>
-        <form action="process.php" method="post" enctype="multipart/form-data" name="frm" id="frm">
+        <form action="cadastro/store" method="post" enctype="multipart/form-data" name="frm" id="frm">
             <div class="row p-2">
 
                 <div class="col-12">
@@ -41,11 +41,11 @@
                     </script>
 
                     <label>3) Quantidade de pessoas que residem no imóvel:</label>
-                    <input class="form form-control" type="number" name="qtdPessoas" min="1" required><br>
+                    <input class="form form-control" type="number" name="qtd_pessoa" min="1" required><br>
 
 
                     <label>4) Renda familiar:</label>
-                    <input class="form form-control" id="valorReal" name="valorReal" oninput="formatarValor(this)"
+                    <input class="form form-control" id="valorReal" name="renda_total" oninput="formatarValor(this)"
                         required><br>
 
                     <script>
@@ -62,11 +62,11 @@
                     <div style="display: flex; flex-wrap: wrap;">
                         <div style="flex: 0 0 50%; max-width: 50%;">
                             <label>5) Marque a situação da residência:</label><br>
-                            <input type="radio" id="propria" name="TipoMoradia" value="Própria" required>
+                            <input type="radio" id="propria" name="tipo_moradia" value="Própria" required>
                             <label for="propria">Própria</label><br>
-                            <input type="radio" id="alugada" name="TipoMoradia" value="Alugada">
+                            <input type="radio" id="alugada" name="tipo_moradia" value="Alugada">
                             <label for="alugada">Alugada</label><br>
-                            <input type="radio" id="cedida" name="TipoMoradia" value="Cedida">
+                            <input type="radio" id="cedida" name="tipo_moradia" value="Cedida">
                             <label for="cedida">Cedida</label><br>
                         </div>
                     </div><br>
@@ -87,16 +87,16 @@
                     <h7><b>Caracterização do imóvel </b></h3><br>
 
                         <label>9) Informe a área total do telhado (m²):</label>
-                        <input class="form form-control" type="number" min="1" step="0.01" required><br>
+                        <input class="form form-control" type="number" min="1" step="0.01" name="area_telhado" required><br>
 
 
                         <label>10) Informe o comprimento total das testadas:</label>
-                        <input class="form form-control" type="number" name="comprimentoTestadas" min="1" step="0.01"
+                        <input class="form form-control" type="number" name="comp_testada" min="1" step="0.01"
                             required><br>
 
 
                         <label>11) Quantas caídas possui o telhado?</label>
-                        <input class="form form-control" type="number" name="numCaidas" min="1" required><br>
+                        <input class="form form-control" type="number" name="num_caidas" min="1" required><br>
 
 
                         <div class="row">
@@ -105,88 +105,85 @@
 
                             </div>
                             <div class="col-6">
-                                <input type="checkbox" id="pvc" name="materialTelhado" value="PVC" required>
+                                <input type="checkbox" id="pvc" name="ck_pvc" value="1">
                                 <label for="pvc">PVC</label><br>
-                                <input type="checkbox" id="amianto" name="materialTelhado" value="Amianto">
+                                <input type="checkbox" id="amianto" name="ck_amianto" value="1">
                                 <label for="amianto">Amianto</label><br>
-                                <input type="checkbox" id="concreto" name="materialTelhado" value="Concreto">
+                                <input type="checkbox" id="concreto" name="ck_concreto" value="1">
                                 <label for="concreto">Concreto</label><br>
-                                <input type="checkbox" id="outros" name="materialTelhado" value="Outros">
+                                <input type="checkbox" id="outros" name="ck_outros" value="1">
                                 <label for="outros">Outros</label><br>
 
                             </div>
                             <div class="col-6">
-                                <input type="checkbox" id="ceramica" name="materialTelhado" value="Cerâmica">
+                                <input type="checkbox" id="ceramica" name="ck_ceramica" value="1">
                                 <label for="ceramica">Cerâmica</label><br>
-                                <input type="checkbox" id="fibrocimento" name="materialTelhado" value="Fibrocimento">
+                                <input type="checkbox" id="fibrocimento" name="ck_fb_cimento" value="1">
                                 <label for="fibrocimento">Fibrocimento</label><br>
-                                <input type="checkbox" id="zinco" name="materialTelhado" value="Zinco">
+                                <input type="checkbox" id="zinco" name="ck_zinco" value="1">
                                 <label for="zinco">Zinco</label><br>
-                                <input type="checkbox" id="metalica" name="materialTelhado" value="Metálica">
+                                <input type="checkbox" id="metalica" name="ck_metalico" value="1">
                                 <label for="metalica">Metálica</label><br>
                             </div>
                             <div class="col-12">
                                 <label for="descricaoOutros">Outros Descrever:</label><br>
-                                <input type="text" id="descricaoOutros" name="descricaoOutros"
+                                <input type="text" id="descricaoOutros" name="ck_descr_out_tp_material"
                                     class="form form-control"><br>
                             </div>
                         </div>
 
 
-                        <form action="/processar" method="post">
-
                             <label for="fogaoLenha">13) Existe fogão a lenha próximo a cozinha?</label><br>
-                            <input type="radio" id="fogaoLenhaSim" name="fogaoLenha" value="Sim" required>
+                            <input type="radio" id="fogaoLenhaSim" name="fogao_lenha" value="Sim" required>
                             <label for="fogaoLenhaSim">Sim</label><br>
-                            <input type="radio" id="fogaoLenhaNao" name="fogaoLenha" value="Não" required>
+                            <input type="radio" id="fogaoLenhaNao" name="fogao_lenha" value="Não" required>
                             <label for="fogaoLenhaNao">Não</label><br><br>
-                        </form>
 
                         
 
 
 
-                        <div id="metragemTelhado" class="hidden">
+                        <div id="dv_metragem_telhado" class="hidden">
                             <label>14) Caso houver fogão a lenha, informe a metragem do <b>telhado</b> a ser
                                 desconsiderada :</label>
-                            <input class="form form-control" type="number" name="metragemTelhado" step="0.01">
+                            <input class="form form-control" type="number" name="fog_lenha_metrag_telh" step="0.01">
                         </div><br>
 
 
                         <div id="comprimentoCalha" class="hidden">
                             <label>15) Caso houver fogão a lenha, informe o comprimento da <b>calha</b> a ser
                                 desconsiderada :</label>
-                            <input class="form form-control" type="number" name="comprimentoCalha" step="0.01">
+                            <input class="form form-control" type="number" name="fog_lenha_metrag_calha" step="0.01">
                         </div><br>
 
 
-                        <label for="aguaPipa">16) Na residência há fornecimento de água por meio de caminhão
+                        <label for="fornecimento_pipa">16) Na residência há fornecimento de água por meio de caminhão
                             pipa?</label><br>
-                        <input type="radio" id="aguaSim" name="aguaPipa" value="Sim" onclick="mostrarOpcoesAgua()"
-                            required>
+                        <input type="radio" id="aguaSim" name="fornecimento_pipa" value="Sim" >
                         <label for="aguaSim">Sim</label><br>
-                        <input type="radio" id="aguaNao" name="aguaPipa" value="Não" onclick="mostrarOpcoesAgua()">
+                        <input type="radio" id="aguaNao" name="fornecimento_pipa" value="Não" >
                         <label for="aguaNao">Não</label><br><br>
 
 
                         <div style="display: flex; flex-wrap: wrap;">
                             <div style="flex: 0 0 50%; max-width: 50%;">
                                 <label>17) Selecione a opção do responsável pelo fornecimento de água:</label><br>
-                                <input type="radio" id="DefesaCivil" name="opcaoResponsavelAgua" value="DefesaCivil"
-                                    onclick="mostrarOpcoesAgua()" required>
-                                <label for="DefesaCivil">Defesa Civil</label><br>
-                                <input type="radio" id="Exercito" name="opcaoResponsavelAgua" value="Exercito"
-                                    onclick="mostrarOpcoesAgua()">
-                                <label for="Exercito">Exército</label><br>
-                                <input type="radio" id="Particular" name="opcaoResponsavelAgua" value="Particular"
-                                    onclick="mostrarOpcoesAgua()">
-                                <label for="Particular">Particular</label><br>
-                                <input type="radio" id="Prefeitura" name="opcaoResponsavelAgua" value="Prefeitura"
-                                    onclick="mostrarOpcoesAgua()">
-                                <label for="Prefeitura">Prefeitura</label><br>
-                                <input type="radio" id="Outros" name="opcaoResponsavelAgua" value="Outros"
-                                    onclick="mostrarOpcoesAgua()">
-                                <label for="Outros">Outros</label><br>
+                                
+                                <input type="radio" id="DefesaCivil" name="responsavel_fornec_pipa" value="DefesaCivil">
+                                <label for="DefesaCivil">Defesa Civil</label>
+                                <br>
+                                <input type="radio" id="Exercito" name="responsavel_fornec_pipa" value="Exercito">
+                                <label for="Exercito">Exército</label>
+                                <br>
+                                <input type="radio" id="Particular" name="responsavel_fornec_pipa" value="Particular">
+                                <label for="Particular">Particular</label>
+                                <br>
+                                <input type="radio" id="Prefeitura" name="responsavel_fornec_pipa" value="Prefeitura">
+                                <label for="Prefeitura">Prefeitura</label>
+                                <br>
+                                <input type="radio" id="Outros" name="responsavel_fornec_pipa" value="Outros">
+                                <label for="Outros">Outros</label>
+                                <br>
                             </div>
                         </div><br>
 
@@ -207,7 +204,7 @@
                     <input type="file" name="img[]" class="filepond img" multiple data-allow-reorder="true"
                         data-max-file-size="3MB" data-max-files="4">
                 </div>
-                <br><br><br><br><br>
+                <br><br><br>
 
 
 
@@ -215,11 +212,11 @@
                     <h7><b>Dados do agente </b></h7><br>
                     <div class="col-12">
                         <label>Nome do agente responsável pela pesquisa:</label>
-                        <input class="form form-control" type="text" name="nomeAgente" required><br>
+                        <input class="form form-control" type="text" name="agente_resp_pesquisa" required><br>
 
                         <div id="MatriculaAgente" class="hidden">
                             <label>Matrícula do agente responsável pela pesquisa:</label>
-                            <input class="form form-control" type="text" name="MatriculaAgente"
+                            <input class="form form-control" type="text" name="matricula_agente"
                                 style="width: 100%;height: 38px; border: 1px solid #ccc;border-radius: 5px;" required>
                         </div><br>
 
@@ -227,15 +224,12 @@
 
 
 
-                        <h7><b><label for="observacoes">Observações:</label></h7>
+                        <h7><b><label for="observacoes">Observações:</label>
                         </h7>
                         </b><br>
 
-                        <textarea id="observacoes" name="observacoes" rows="4" cols="50"
+                        <textarea id="observacoes" name="obs" rows="4" cols="50"
                             style="width: 100%;height: 60px; border: 1px solid #ccc;border-radius: 5px;"></textarea><br><br>
-
-                        <label><b>Data da Pesquisa:</b></label>
-                        <input type="date" name="dataPesquisa" required>
 
 
                         <input class="btn btn-success" type="submit" name="btn" value="Salvar"><br><br>
@@ -309,7 +303,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: 'process.php',
+            url: 'cadastro/store',
             type: 'POST',
             data: fd,
             dataType: 'JSON',
@@ -330,24 +324,6 @@ $(document).ready(function() {
 });
 </script>
 
-<?php
-
-  $nome = isset($_POST['name']) ? $_POST['name'] : null;
-  $cpf  = isset($_POST['cpf'])  ? $_POST['cpf']  : null;
-  $btn  = isset($_POST['btn'])  ? $_POST['btn']  : null;
-  $files = isset($_POST['files']) ? $_POST['files'] : null;
-
-  if ($btn) {
-
-    if (isset($files)) {
-      foreach ($files as $key => $file) {
-        $fileName = 'img' . $cpf . "-" . time() . $key . '.' . $file->getClientOriginalExtension();
-        move_uploaded_file($file, 'img/' . $fileName);
-      }
-    }
-  }
-
-  ?>
 
 </body>
 

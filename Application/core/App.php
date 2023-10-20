@@ -17,6 +17,8 @@ class App
   // Método construtor
   public function __construct()
   {
+
+
     $URL_ARRAY = $this->parseUrl();
 
     $this->getControllerFromUrl($URL_ARRAY);
@@ -47,9 +49,9 @@ class App
   */
   private function getControllerFromUrl($url)
   {
-    if ( !empty($url[0]) && isset($url[0]) ) {
-      if ( file_exists('../Application/controllers/' . ucfirst($url[0])  . 'Controller.php') ) {
-        $this->controller = ucfirst($url[0]);
+    if ( !empty($url[2]) && isset($url[2]) ) {
+      if ( file_exists('../Application/controllers/' . ucfirst($url[2])  . 'Controller.php') ) {
+        $this->controller = ucfirst($url[2]);
       } else {
         $this->page404 = true;
       }
@@ -68,9 +70,9 @@ class App
   */
   private function getMethodFromUrl($url)
   {
-    if ( !empty($url[1]) && isset($url[1]) ) {
-      if ( method_exists($this->controller, $url[1]) && !$this->page404) {
-        $this->method = $url[1];
+    if ( !empty($url[3]) && isset($url[3]) ) {
+      if ( method_exists($this->controller, $url[3]) && !$this->page404) {
+        $this->method = $url[3];
       } else {
         // caso a classe ou o método informado não exista, o método pageNotFound
         // do Controller é chamado.
@@ -88,8 +90,8 @@ class App
   */
   private function getParamsFromUrl($url)
   {
-    if (count($url) > 2) {
-      $this->params = array_slice($url, 2);
+    if (count($url) > 4) {
+      $this->params = array_slice($url, 4);
     }
   }
 }
