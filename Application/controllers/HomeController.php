@@ -1,8 +1,9 @@
 <?php
 
 use Application\core\Controller;
-
 use Application\models\Cadastros;
+
+///use Application\models\Cadastros;
 
 class Home extends Controller
 {
@@ -13,13 +14,16 @@ class Home extends Controller
   {
 
     $cadastro = new Cadastros();
+    $cadastro->find('all');
 
-    $total_registros = $cadastro->findAll();
+    //$cadastro = new Cadastros();
+
+    //$total_registros = $cadastro->findAll();
 
     //var_dump($total_registros);
     $this->view('home/index', 
       [
-        'total_registros' => $total_registros,
+        //'total_registros' => $total_registros,
       ]
     );
   }

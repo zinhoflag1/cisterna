@@ -1,6 +1,13 @@
 <?php
 
-spl_autoload_register(function ($filename) {
+require 'core/phpActiveRecord/ActiveRecord.php';
+
+
+/**
+ * @param $className
+ */
+
+ spl_autoload_register(function ($filename) {
   $file = '..' . DIRECTORY_SEPARATOR . $filename . '.php';
   if ( DIRECTORY_SEPARATOR === '/' ):
     $file = str_replace('\\', '/', $file);
@@ -12,3 +19,4 @@ spl_autoload_register(function ($filename) {
     echo 'Erro ao importar o arquivo!' ;
   endif;
 });
+

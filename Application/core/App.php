@@ -18,7 +18,6 @@ class App
   public function __construct()
   {
 
-
     $URL_ARRAY = $this->parseUrl();
 
     $this->getControllerFromUrl($URL_ARRAY);

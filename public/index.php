@@ -1,9 +1,11 @@
   <?php
-    require '../Application/autoload.php';
+  require '../Application/autoload.php';
 
-    use Application\core\App;
-    use Application\core\Controller;
+  get_defined_vars();
+  use Application\core\App;
+  use Application\core\Controller;
 
-    $app = new App();
+  
+  $app = new App();
 
   ?>
