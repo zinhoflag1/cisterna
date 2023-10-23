@@ -1,11 +1,16 @@
 <?php
 
-use Application\core\Controller;
-use Application\models\Cadastros;
+//namespace Application;
 
-///use Application\models\Cadastros;
+#use \Application\core;
+//use Application\core\controllers as CoreController;
 
-class Home extends Controller
+#use \Application\models as Model;
+//use \Application\controllers\CadastroController;
+
+//require $_SERVER['DOCUMENT_ROOT']."/cisterna/Application/models/Cadastros.php";
+
+class HomeController extends Controller
 {
   /*
   * chama a view index.php do  /home   ou somente   /
@@ -13,17 +18,22 @@ class Home extends Controller
   public function index()
   {
 
-    $cadastro = new Cadastros();
-    $cadastro->find('all');
+    //print_r(get_declared_classes());
 
-    //$cadastro = new Cadastros();
+    $cadModel = new Cadastro();
+    $cadModel->findAll();
+    //$cadastro = new CadastroController();
 
-    //$total_registros = $cadastro->findAll();
+    var_dump($cadModel);
+
+    $total_registros = 0;
+
+    $total_registros = $cadModel;
 
     //var_dump($total_registros);
     $this->view('home/index', 
       [
-        //'total_registros' => $total_registros,
+        'total_registros' => $total_registros,
       ]
     );
   }

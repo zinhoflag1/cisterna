@@ -1,12 +1,14 @@
 <?php
 
-namespace Application\models;
-//namespace Application\core\phpActiveRecord;
-//use Application\core\phpActiveRecord;
-//use PDO;
-class Cadastros extends ActiveRecord\model
-{
+//namespace Application\models;
+//namespace Application\core\Database;
+//use  Application\controllers as Controler;
+//use Application\core\App;
+//use Application\core\App\Database;
 
+
+class Cadastro
+{
 
     static $table_name = 'cadatros';
 
@@ -27,14 +29,14 @@ class Cadastros extends ActiveRecord\model
   *
    * @return   array
    */
-//   public static function findAll()
-//   {
+  public static function findAll()
+  {
 
-//     $cadastro = Cadastro::
-//     $conn = new Database();
-//     $result = $conn->executeQuery('SELECT * FROM cadastros');
-//     return $result->fetchAll(PDO::FETCH_ASSOC);
-//   }
+    $conn = new Database();
+    $result = $conn->executeQuery('SELECT * FROM cadastro');
+    
+    return $result;
+  }
 
 //   /**
 //   * Este método busca um usuário armazenados na base de dados com um

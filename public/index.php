@@ -1,11 +1,10 @@
   <?php
-  require '../Application/autoload.php';
 
-  get_defined_vars();
-  use Application\core\App;
-  use Application\core\Controller;
+
+
+require $_SERVER['DOCUMENT_ROOT'].'/cisterna/Application/autoload.php';
 
   
-  $app = new App();
+  $app = new \App();
 
   ?>

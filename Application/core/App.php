@@ -1,7 +1,7 @@
 <?php
 
-namespace Application\core;
-
+//use Application\core;
+use Application\controllers\HomeController;
 
 /**
 * Esta classe é responsável por obter da URL o controller, método (ação) e os parâmetros
@@ -9,7 +9,7 @@ namespace Application\core;
 */
 class App
 {
-  protected $controller = 'Home';
+  protected $controller = 'HomeController';
   protected $method = 'index';
   protected $page404 = false;
   protected $params = [];
@@ -49,13 +49,13 @@ class App
   private function getControllerFromUrl($url)
   {
     if ( !empty($url[2]) && isset($url[2]) ) {
-      if ( file_exists('../Application/controllers/' . ucfirst($url[2])  . 'Controller.php') ) {
+      if ( file_exists($_SERVER['DOCUMENT_ROOT'].'/cisterna/Application/controllers/' . ucfirst($url[2])  . '.php') ) {
         $this->controller = ucfirst($url[2]);
       } else {
         $this->page404 = true;
       }
     }
-    require '../Application/controllers/' . $this->controller . 'Controller.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/cisterna/Application/controllers/' . $this->controller . '.php';
     $this->controller = new $this->controller();
 
   }

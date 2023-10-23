@@ -1,22 +1,32 @@
 <?php
 
-require 'core/phpActiveRecord/ActiveRecord.php';
-
-
 /**
  * @param $className
  */
 
- spl_autoload_register(function ($filename) {
-  $file = '..' . DIRECTORY_SEPARATOR . $filename . '.php';
-  if ( DIRECTORY_SEPARATOR === '/' ):
-    $file = str_replace('\\', '/', $file);
+
+spl_autoload_register(function ($filename) {
+
+  $folder = 'cisterna';
+
+  $core = $_SERVER['DOCUMENT_ROOT'] . '/' . $folder . '/Application/core/' . $filename . '.php';
+  $controller = $_SERVER['DOCUMENT_ROOT'] . '/' . $folder . '/Application/controllers/' . $filename . '.php';
+  $model = $_SERVER['DOCUMENT_ROOT'] . '/' . $folder . '/Application/models/' . $filename . '.php';
+
+  if (DIRECTORY_SEPARATOR === '/') :
+    $core = str_replace('\\', '/', $core);
+    $controller = str_replace('\\', '/', $controller);
+    $model = str_replace('\\', '/', $model);
   endif;
 
-  if ( file_exists($file) ):
-    require $file;
-  else:
-    echo 'Erro ao importar o arquivo!' ;
-  endif;
+  //var_dump($file);
+  if (file_exists($core)) {
+    require $core;
+  } else if (file_exists($controller)) {
+    require $controller;
+  } else if (file_exists($model)) {
+    require $model;
+  } else {
+    echo 'Erro ao importar o arquivo!';
+  }
 });
-

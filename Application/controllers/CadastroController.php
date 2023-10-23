@@ -1,9 +1,9 @@
 <?php
 
-use Application\core\Controller;
-use Psr\Http\Message\RequestInterface;
+//use \Application\core\Controller;
+//use Psr\Http\Message\RequestInterface;
 
-class Cadastro extends Controller
+class CadastroController extends Controller
 {
   /**
   * chama a view index.php da seguinte forma /user/index   ou somente   /user
@@ -11,7 +11,7 @@ class Cadastro extends Controller
   */
   public function index()
   {
-    
+   
     $this->view('cadastro/index');#, ['users' => $data]);
   }
 
