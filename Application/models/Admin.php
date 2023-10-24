@@ -5,15 +5,16 @@ namespace Application\models;
 use Application\core\Database;
 use Exception;
 use PDO;
+
 class Admin
 {
   /** Poderiamos ter atributos aqui */
 
   /**
-  * Este método busca todos os usuários armazenados na base de dados
-  *
-  * @return   array
-  */
+   * Este método busca todos os usuários armazenados na base de dados
+   *
+   * @return   array
+   */
   public static function findAll()
   {
     $conn = new Database();
@@ -22,12 +23,12 @@ class Admin
   }
 
   /**
-  * Este método busca um usuário armazenados na base de dados com um
-  * determinado ID
-  * @param    int     $id   Identificador único do usuário
-  *
-  * @return   array
-  */
+   * Este método busca um usuário armazenados na base de dados com um
+   * determinado ID
+   * @param    int     $id   Identificador único do usuário
+   *
+   * @return   array
+   */
   public static function findById(int $id)
   {
     $conn = new Database();
@@ -38,31 +39,55 @@ class Admin
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  /* verifica se existe a base de dados */
+
+  /**
+   * verifica se existe a base de dados
+   */
   public static function verificaBase()
   {
-      error_reporting(E_ALL);
+    error_reporting(E_ALL);
 
-      $conn = new Database();
-      $result = $conn->executeQuery('SHOW DATABASES');
+    $conn = new Database();
+    $result = $conn->executeQuery('SHOW DATABASES');
 
-      while (($base = $result->fetchColumn(0)) !== false) {
-          if ($base == "cisterna10") {
-              # cria a base de dados
-              return true;
-              continue;
-          } else {
-              return false;
-          }
+    while (($base = $result->fetchColumn(0)) !== false) {
+      if ($base == "cisterna10") {
+        # cria a base de dados
+        return true;
+        continue;
+      } else {
+        return false;
       }
+    }
+  }
+
+  /**
+   * verifica se existe a Tabela de Municípios
+   */
+  public static function tbl_municipio()
+  {
+    error_reporting(E_ALL);
+
+    $conn = new Database();
+    $result = $conn->executeQuery('SHOW TABLES;');
+
+    $tables = $result->fetchAll();
+
+    foreach ($tables as $key => $table) {
+      if ($table[0] == 'municipio') {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   /* verifica se existe a base de dados */
   public static function criarbase()
   {
-      error_reporting(E_ALL);
-      $conn = new Database();
-      return $conn->executeQuery("CREATE DATABASE IF NOT EXISTS `cisterna10`");
+    error_reporting(E_ALL);
+    $conn = new Database();
+    return $conn->executeQuery("CREATE DATABASE IF NOT EXISTS `cisterna10`");
   }
 
 
@@ -70,9 +95,9 @@ class Admin
   /* instala base de dados no banco */
   public static function instalar()
   {
-      $conn = new Database();
+    $conn = new Database();
 
-      $sql = "USE `cisterna10`;
+    $sql = "USE `cisterna10`;
           CREATE TABLE IF NOT EXISTS `cadastro` (
       `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
       `nome` varchar(70) NOT NULL DEFAULT '' COMMENT 'Nome do Morador',
@@ -108,13 +133,37 @@ class Admin
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ";
 
-      try {
-          return $conn->executeQuery($sql);
-      } catch (Exception $e) {
-          return $e->getMessage();
-      }
+    try {
+      return $conn->executeQuery($sql);
+    } catch (Exception $e) {
+      return $e->getMessage();
+    }
   }
 
 
+  /**
+   * Sql Importar tabela municipios
+   */
+  public function importarMunicipio()
+  {
 
+    $conn = new Database();
+
+    $filename = dirname(__DIR__,2).'/municipio.sql';
+
+    $sql = '';
+
+    $lines = file($filename);
+
+    foreach ($lines as $line) {
+      $sql .= $line;
+    }
+
+
+    try {
+      return $conn->executeQuery($sql);
+    } catch (Exception $e) {
+      return $e->getMessage();
+    }
+  }
 }

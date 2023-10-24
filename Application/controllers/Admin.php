@@ -4,7 +4,7 @@ use Application\core\Controller;
 
 class Admin extends Controller
 {
-  public $admin; 
+  public $admin;
 
   public function __construct()
   {
@@ -16,18 +16,18 @@ class Admin extends Controller
   */
   public function index()
   {
-    
-  $db_instalado = $this->admin->verificaBase();
+
+    $db_instalado    = $this->admin->verificaBase();
+    $tb_municipio = $this->admin->tbl_municipio();
 
     $this->view('admin/index', [
       'db_instalado' => $db_instalado,
+      'tb_municipio' => $tb_municipio,
     ]);
   }
 
   public function instalaBase()
   {
-
-    //var_dump($this->admin);
 
     # verifica a base
     if (!$this->admin->verificaBase()) {
@@ -37,6 +37,15 @@ class Admin extends Controller
     }
 
     #cria a tabela
-    var_dump( $this->admin->instalar());
+    $this->admin->instalar();
+  }
+
+  /**
+   * Importar tabela municipios
+   */
+  public function import()
+  {
+    var_dump($this->admin->importarMunicipio());
+
   }
 }

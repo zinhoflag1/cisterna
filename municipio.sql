@@ -1,3 +1,4 @@
+use cisterna10;
 CREATE TABLE IF NOT EXISTS `municipio` (
   `id` int(11) NOT NULL COMMENT 'Identificador do Municipio',
   `nome` varchar(30) DEFAULT NULL COMMENT 'Nome do Municipio',
