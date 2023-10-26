@@ -8,97 +8,63 @@ use PDO;
 
 class Admin
 {
-  /** Poderiamos ter atributos aqui */
 
   /**
-   * Este método busca todos os usuários armazenados na base de dados
-   *
-   * @return   array
-   */
-  public static function findAll()
+  * Cria o Banco de Dados
+  *
+  * @return void
+  */
+  public static function createDatabase($db)
   {
-    $conn = new Database();
-    $result = $conn->executeQuery('SELECT * FROM users');
-    return $result->fetchAll(PDO::FETCH_ASSOC);
-  }
 
-  /**
-   * Este método busca um usuário armazenados na base de dados com um
-   * determinado ID
-   * @param    int     $id   Identificador único do usuário
-   *
-   * @return   array
-   */
-  public static function findById(int $id)
-  {
+    error_reporting(E_ALL);
     $conn = new Database();
-    $result = $conn->executeQuery('SELECT * FROM users WHERE id = :ID LIMIT 1', array(
-      ':ID' => $id
-    ));
-
-    return $result->fetchAll(PDO::FETCH_ASSOC);
+    return $conn->query("CREATE DATABASE IF NOT EXISTS `".$db."`");
+  
   }
 
 
   /**
-   * verifica se existe a base de dados
+   * verifica se existe a Tabela de $table
    */
-  public static function verificaBase()
+  public static function verificaTbl($tbl)
   {
+
     error_reporting(E_ALL);
 
     $conn = new Database();
-    $result = $conn->executeQuery('SHOW DATABASES');
-
-    while (($base = $result->fetchColumn(0)) !== false) {
-      if ($base == "cisterna10") {
-        # cria a base de dados
-        return true;
-        continue;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  /**
-   * verifica se existe a Tabela de Municípios
-   */
-  public static function tbl_municipio()
-  {
-    error_reporting(E_ALL);
-
-    $conn = new Database();
-    $result = $conn->executeQuery('SHOW TABLES;');
+    $result = $conn->query('SHOW TABLES');
 
     $tables = $result->fetchAll();
 
-    foreach ($tables as $key => $table) {
-      if ($table[0] == 'municipio') {
-        return true;
-      } else {
-        return false;
+    if (isset($table)) {
+      foreach ($tables as $key => $table) {
+        if ($table[0] == $tbl) {
+          return true;
+        } else {
+          return false;
+        }
       }
+    } else {
+      return false;
     }
   }
 
-  /* verifica se existe a base de dados */
-  public static function criarbase()
+
+
+  /**
+   * Cria a Tabela cadastro
+   * @return void
+   */
+
+  public static function createTblCadastro()
   {
+
     error_reporting(E_ALL);
-    $conn = new Database();
-    return $conn->executeQuery("CREATE DATABASE IF NOT EXISTS `cisterna10`");
-  }
 
-
-
-  /* instala base de dados no banco */
-  public static function instalar()
-  {
     $conn = new Database();
 
-    $sql = "USE `cisterna10`;
-          CREATE TABLE IF NOT EXISTS `cadastro` (
+    $sql = "CREATE TABLE IF NOT EXISTS `cadastro` (
       `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
       `nome` varchar(70) NOT NULL DEFAULT '' COMMENT 'Nome do Morador',
       `cpf` varchar(12) NOT NULL DEFAULT '' COMMENT 'Cpf do Morador',
@@ -134,7 +100,7 @@ class Admin
     ";
 
     try {
-      return $conn->executeQuery($sql);
+      return $conn->query($sql);
     } catch (Exception $e) {
       return $e->getMessage();
     }
@@ -142,14 +108,101 @@ class Admin
 
 
   /**
-   * Sql Importar tabela municipios
+   * cria a tabela municipio
+   * @return void
    */
-  public function importarMunicipio()
+
+  public static function createTblMunicipio()
+  {
+    $conn = new Database();
+
+    $sql = "CREATE TABLE IF NOT EXISTS `municipio` (
+        `id` int(11) NOT NULL COMMENT 'Identificador do Municipio',
+        `nome` varchar(30) DEFAULT NULL COMMENT 'Nome do Municipio',
+        `macroregiao` varchar(255) DEFAULT NULL COMMENT 'Macroregiao do Estado',
+        `latitude` varchar(13) DEFAULT NULL COMMENT 'Latitude',
+        `longitude` varchar(13) DEFAULT NULL COMMENT 'Longitude',
+        `latitude_dec` double DEFAULT NULL COMMENT 'Latitude Decimal',
+        `longitude_dec` double DEFAULT NULL COMMENT 'Longitude Decimal',
+        `distancia_bh` double DEFAULT 0 COMMENT 'Distancia de BH',
+        `populacao` double DEFAULT 0 COMMENT 'População',
+        `territorio_desenv` varchar(70) DEFAULT NULL COMMENT 'Território de Desenvolvimento',
+        `tel` varchar(16) DEFAULT NULL COMMENT 'Telefone Prefeitura',
+        `fax` varchar(16) DEFAULT NULL COMMENT 'Fax Prefeitura',
+        `endereco` varchar(70) DEFAULT NULL COMMENT 'Endereço Prefeitura',
+        `bairro` varchar(45) DEFAULT NULL COMMENT 'Bairro Prefeitura',
+        `cep` varchar(45) DEFAULT NULL COMMENT 'cep prefeitura',
+        `email` varchar(45) DEFAULT NULL COMMENT 'Email Prefeitura',
+        `tel_pref` varchar(20) DEFAULT NULL COMMENT 'Telefone Prefeito',
+        `cel_pref` varchar(20) DEFAULT NULL COMMENT 'Celular Prefeito',
+        `pop_rural` int(11) DEFAULT 0 COMMENT 'Populacao Rural',
+        `qtd_pipa` int(11) DEFAULT 0 COMMENT 'Quantidade de Pipa Contratados ou de Propriedade Prefeitura',
+        `prefeito` varchar(45) DEFAULT NULL COMMENT 'Nome do Prefeito',
+        `area` varchar(45) DEFAULT NULL COMMENT 'Area Territorio',
+        `aliquota_iss` decimal(16,2) DEFAULT NULL COMMENT 'Aluquita Iss',
+        `resp_cob_iss` varchar(15) DEFAULT NULL COMMENT 'Responsabilidade Cobranca Iss',
+        `num_lei_iss` varchar(30) DEFAULT NULL COMMENT 'Número Lei Cobranca Iss',
+        `cobra_iss` varchar(10) DEFAULT NULL COMMENT 'Isenção de ISS',
+        `CodUf` varchar(2) DEFAULT NULL,
+        `Codmundv` varchar(10) DEFAULT NULL,
+        `Codmun` varchar(10) DEFAULT NULL,
+        `id_meso` int(11) DEFAULT NULL COMMENT 'Identificador da Mesorregiao',
+        `id_micro` int(11) DEFAULT NULL COMMENT 'Identificador Microrregiao',
+        `NOME_IBGE` varchar(60) DEFAULT NULL,
+        `semi_arido` tinyint(4) DEFAULT 0 COMMENT 'Faz Parte do Semi-Arido',
+        PRIMARY KEY (`id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
+      ";
+
+    try {
+      $result =  $conn->query($sql);
+      return $result;
+    } catch (Exception $e) {
+      return $e->getMessage();
+    }
+  }
+
+
+  /**
+   * Cria tabela rpm_mun
+   *
+   * @return void
+   */
+  public static function createTblRpmMun()
   {
 
     $conn = new Database();
 
-    $filename = dirname(__DIR__,2).'/municipio.sql';
+    $sql = "CREATE TABLE IF NOT EXISTS `rpm_mun` (
+      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+      `nome` varchar(45) DEFAULT NULL COMMENT 'Nome Região',
+      `unidade` varchar(45) DEFAULT NULL COMMENT 'Unidade Batalhão',
+      `id_municipio` int(11) DEFAULT NULL COMMENT 'Identificador do Municipio',
+      `id_rpm` int(11) DEFAULT NULL COMMENT 'Identificador da RPM',
+      `rdc` varchar(45) DEFAULT NULL COMMENT 'Regial de Defesa Civil',
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=1708 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
+    ";
+
+    try {
+      $result =  $conn->query($sql);
+      return $result;
+    } catch (Exception $e) {
+      return $e->getMessage();
+    }
+  }
+
+
+  /**
+   * Sql Importar de arquivo com script .sql
+   * @return void
+   */
+  public static function importarFileSql($fileSql)
+  {
+
+    $conn = new Database();
+
+    $filename = dirname(__DIR__, 2) . "/" . $fileSql . '.sql';
 
     $sql = '';
 
@@ -159,11 +212,43 @@ class Admin
       $sql .= $line;
     }
 
-
     try {
-      return $conn->executeQuery($sql);
+      $result = $conn->query($sql);
+      return $result
     } catch (Exception $e) {
       return $e->getMessage();
     }
+  }
+
+
+  /** Poderiamos ter atributos aqui */
+
+  /**
+   * Este método busca todos os usuários armazenados na base de dados
+   *
+   * @return   array
+   */
+  public static function findAll()
+  {
+    $conn = new Database();
+    $result = $conn->query('SELECT * FROM users');
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * Este método busca um usuário armazenados na base de dados com um
+   * determinado ID
+   * @param    int     $id   Identificador único do usuário
+   *
+   * @return   array
+   */
+  public static function findById(int $id)
+  {
+    $conn = new Database();
+    // $result = $conn->query('SELECT * FROM users WHERE id = :ID LIMIT 1', array(
+    //   ':ID' => $id
+    // ));
+
+    //return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 }
