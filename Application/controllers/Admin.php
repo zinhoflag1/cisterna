@@ -17,13 +17,7 @@ class Admin extends Controller
   public function index()
   {
 
-    //$db_instalado    = $this->admin->verificaBase();
-    $tb_municipio = $this->admin->verificaTblMunicipio();
-
-    $this->view('admin/index', [
-      //'db_instalado' => $db_instalado,
-      'tb_municipio' => $tb_municipio,
-    ]);
+    $this->view('admin/index');
   }
 
   /**
@@ -51,7 +45,7 @@ class Admin extends Controller
    */
   public function instalarTblMunicipio()
   {
-    var_dump($this->admin->tblMunicipio());
+    $this->admin->tblMunicipio();
 
   }
 
@@ -62,8 +56,21 @@ class Admin extends Controller
   public function import()
   {
 
-    var_dump($this->admin->createTblMunicipio());
-    var_dump($this->admin->importarMunicipio());
+    $this->admin->createTblMunicipio();
+    $this->admin->importarMunicipio();
 
+  }
+
+
+  /**
+   * Sincronizar base
+   *
+   * @return void
+   */
+  public function sinc()
+  {
+
+    $this->view('sinc/index');
+    
   }
 }

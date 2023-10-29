@@ -25,6 +25,9 @@
 
     
         <?php 
+
+
+  
          
           // if($data['db_instalado']) {
           //   print "<a onclick=\"return confirm('Confirma a Instalação da base de dados')\" href=\"admin/instalabase\" class=\"btn btn-primary btn-sm\">Rodar instalação</a>";
@@ -34,13 +37,13 @@
           //   print "<p class=\"alert alert-success\">Base de dados Instalada ! </p><hr>";
           // }
 
-          if(!$data['tb_municipio']) {
-            print "<a onclick=\"return confirm('Confirma a Importação da Tabela de Municípios')\" href=\"admin/import\" class=\"btn btn-primary btn-sm\">Importar Tabela Municípios</a><br><br>";
-            print "<p class=\"alert alert-warning\">É necessário instalar a Tabela de municípios ! </p>";
-          }else {
+          // if(!$data['tb_municipio']) {
+          //   print "<a onclick=\"return confirm('Confirma a Importação da Tabela de Municípios')\" href=\"admin/import\" class=\"btn btn-primary btn-sm\">Importar Tabela Municípios</a><br><br>";
+          //   print "<p class=\"alert alert-warning\">É necessário instalar a Tabela de municípios ! </p>";
+          // }else {
 
-            print "<p class=\"alert alert-success\">Tabela de Municípios em condições de Uso ! </p>";
-          }
+          //   print "<p class=\"alert alert-success\">Tabela de Municípios em condições de Uso ! </p>";
+          // }
           ?>
         </div>
 

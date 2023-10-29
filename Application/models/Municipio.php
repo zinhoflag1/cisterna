@@ -17,7 +17,7 @@ class Municipio
   public static function findAll()
   {
     $conn = new Database();
-    $result = $conn->executeQuery('SELECT * FROM cadastro');
+    $result = $conn->query('SELECT * FROM municipio');
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
@@ -27,9 +27,9 @@ class Municipio
   public static function municipio() 
   {
     $conn = new Database();
-    $result = $conn->executeQuery('SELECT * FROM municipio');
+    $result = $conn->query('SELECT * FROM municipio');
 
-    var_dump($result->fetc(PDO::FETCH_ASSOC));
+    $result->fetchAll(PDO::FETCH_ASSOC);
 
   
 

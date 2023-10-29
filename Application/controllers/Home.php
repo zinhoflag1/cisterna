@@ -4,7 +4,7 @@ use Application\core\Controller;
 
 class Home extends Controller
 {
-  public $home; 
+  public $home;
   public $admin;
 
   public function __construct()
@@ -12,8 +12,7 @@ class Home extends Controller
 
 
     $this->home = $this->model('Home');
-    $this->admin = $this->model('admin');
-
+    $this->admin = $this->model('Admin');
   }
 
   /*
@@ -28,33 +27,45 @@ class Home extends Controller
     $municipio = $this->admin::verificaTbl('municipio');
     $rpm_mun = $this->admin::verificaTbl('rpm_mun');
 
-    # cria a tabela no banco
-    if(!$cadastro){
-      $this->admin::createTblCadastro(); 
+    # cria env
+    if(!file_exists('config.env')) {
+      $this->admin::createEnv();
     }
-    
+
     # cria a tabela no banco
-    if(!$municipio){
+    if (!$cadastro) {
+      $this->admin::createTblCadastro();
+    }
+
+    # cria a tabela no banco
+    if (!$municipio) {
       $this->admin::createTblMunicipio();
+      $this->admin::importarFileSql('municipio');
     }
 
     # cria a tabela no banco
-    if(!$rpm_mun){
+    if (!$rpm_mun) {
       $this->admin::createTblRpmMun();
-      $this->admin::importarFileSql('municipio_rpm_mun'); 
+      $this->admin::importarFileSql('municipio_rpm_mun');
     }
 
-    # importa da dos do .sql
-    $this->admin::
+   
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+      $post = $_POST;
 
-    # mostra total de registros no sistema
-    $reg = $this->home::findAll('cadastro');
+      $reg = $this->home::select('cadastro', $post);
+
+    }else {
+      # mostra total de registros no sistema
+      $reg = $this->home::findAll('cadastro');
+    }
+
+    
 
     $this->view('home/index', [
       'total_registros' => count($reg),
       'registros' => $reg,
     ]);
   }
-
 }

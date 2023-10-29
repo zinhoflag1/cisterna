@@ -10,9 +10,11 @@ class Database extends PDO
   // configuração do banco de dados
   private $DB_NAME = 'pesquisa10';
   private $DB_USER = 'root';
-  private $DB_PASSWORD = '';
+  #private $DB_PASSWORD = ''; cedec
+  private $DB_PASSWORD = '12345678'; # casa
   private $DB_HOST = 'localhost';
-  private $DB_PORT = 3307;
+  #private $DB_PORT = 3307; cedec
+  private $DB_PORT = 3306; # casa
 
   // armazena a conexão
   public $conn;

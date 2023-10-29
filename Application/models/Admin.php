@@ -10,17 +10,16 @@ class Admin
 {
 
   /**
-  * Cria o Banco de Dados
-  *
-  * @return void
-  */
+   * Cria o Banco de Dados
+   *
+   * @return void
+   */
   public static function createDatabase($db)
   {
 
     error_reporting(E_ALL);
     $conn = new Database();
-    return $conn->query("CREATE DATABASE IF NOT EXISTS `".$db."`");
-  
+    return $conn->query("CREATE DATABASE IF NOT EXISTS `" . $db . "`");
   }
 
 
@@ -71,7 +70,7 @@ class Admin
       `qtd_pessoa` int(11) NOT NULL DEFAULT 1 COMMENT 'Quantidade de Pessoas na Residencia',
       `renda_total` decimal(16,2) NOT NULL DEFAULT 0.00 COMMENT 'Renda Familiar',
       `tipo_moradia` varchar(20) NOT NULL DEFAULT '0' COMMENT 'Tipo da Moradia',
-      `endereco` varchar(110) NOT NULL DEFAULT 'Endereço' COMMENT 'Endereço do Morador',
+      `endereco` varchar(110) DEFAULT NULL DEFAULT 'Endereço' COMMENT 'Endereço do Morador',
       `comunidade` varchar(100) NOT NULL DEFAULT 'Comunidade' COMMENT 'Nome da Comunidade',
     `municipio` varchar(100) NOT NULL DEFAULT 'Município' COMMENT 'Nome do Município',
     `area_telhado` decimal(16,2) NOT NULL DEFAULT 0.00 COMMENT 'Área do Telhado M²',
@@ -95,6 +94,7 @@ class Admin
     `matricula_agente` varchar(70) NOT NULL COMMENT 'Matricula do Agente',
     `obs` varchar(255) DEFAULT NULL COMMENT 'Observações',
     `dt_cadastro` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Data Hora do Cadastro',
+    `lat_long` VARCHAR(50) NOT NULL COMMENT 'Latitude /Longitude',
     PRIMARY KEY (`id`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ";
@@ -155,8 +155,8 @@ class Admin
       ";
 
     try {
-      $result =  $conn->query($sql);
-      return $result;
+      $result =  $conn->prepare($sql);
+      return $result->execute();
     } catch (Exception $e) {
       return $e->getMessage();
     }
@@ -181,7 +181,7 @@ class Admin
       `id_rpm` int(11) DEFAULT NULL COMMENT 'Identificador da RPM',
       `rdc` varchar(45) DEFAULT NULL COMMENT 'Regial de Defesa Civil',
       PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1708 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
     ";
 
     try {
@@ -214,7 +214,7 @@ class Admin
 
     try {
       $result = $conn->query($sql);
-      return $result
+      return $result;
     } catch (Exception $e) {
       return $e->getMessage();
     }
@@ -250,5 +250,17 @@ class Admin
     // ));
 
     //return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+
+  public static function createEnv()
+  {
+
+    //$arquivo = fopen('../config.env', 'w+');
+
+      
+
+    // if ($arquivo == false)
+    //   die('Não foi possível criar o arquivo.');
   }
 }

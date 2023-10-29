@@ -46,6 +46,7 @@ class App
   */
   private function getControllerFromUrl($url)
   {
+
     if ( !empty($url[0]) && isset($url[0]) ) {
       if ( file_exists('../Application/controllers/' . ucfirst($url[0])  . '.php') ) {
         $this->controller = ucfirst($url[0]);
@@ -53,7 +54,7 @@ class App
         $this->page404 = true;
       }
     }
-
+    
     require '../Application/controllers/' . $this->controller . '.php';
     $this->controller = new $this->controller();
 
@@ -88,6 +89,7 @@ class App
   */
   private function getParamsFromUrl($url)
   {
+
     if (count($url) > 2) {
       $this->params = array_slice($url, 2);
     }
