@@ -258,9 +258,27 @@ class Admin
 
     //$arquivo = fopen('../config.env', 'w+');
 
-      
+
 
     // if ($arquivo == false)
     //   die('Não foi possível criar o arquivo.');
+  }
+
+
+  public static function getFieldsTbl($db, $table)
+  {
+
+    $conn = new Database();
+
+    $sql = "select `column_name`, `column_type`, `column_default`, `column_comment`
+    from `information_schema`.`COLUMNS` 
+    where `table_name` = '".$table."' 
+    and `table_schema` = '".$db."'";
+
+    $result = $conn->query($sql);
+
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+
+
   }
 }

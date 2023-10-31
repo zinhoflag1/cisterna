@@ -10,11 +10,13 @@ class Database extends PDO
   // configuração do banco de dados
   private $DB_NAME = 'pesquisa10';
   private $DB_USER = 'root';
-  #private $DB_PASSWORD = ''; cedec
-  private $DB_PASSWORD = '12345678'; # casa
+
+  
   private $DB_HOST = 'localhost';
-  #private $DB_PORT = 3307; cedec
-  private $DB_PORT = 3306; # casa
+  #private $DB_PASSWORD = ''; #cedec
+  private $DB_PORT = 3307; #cedec / notebook
+  private $DB_PASSWORD = '12345678'; # casa notebook
+  #private $DB_PORT = 3306; # casa
 
   // armazena a conexão
   public $conn;
@@ -22,6 +24,7 @@ class Database extends PDO
   public function __construct()
   {
 
+  
     try {
       parent::__construct(
         "mysql:dbname=$this->DB_NAME;host=$this->DB_HOST;port=$this->DB_PORT",

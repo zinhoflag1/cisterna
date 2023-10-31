@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="..\vendor\twbs\bootstrap\dist\css\bootstrap.min.css">
     <link rel="stylesheet" href="..\node_modules\select2\dist\css\select2.css">
+    <link ref="stylesheet" href="..\node_modules\toastr\toastr.min.css">
     <!-- Filepond stylesheet -->
     <link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet">
 
@@ -212,14 +213,14 @@
                     <div id="div_metragem_telhado" class="hidden">
                         <label>14.1) Caso houver fogão a lenha, informe a metragem do <b>telhado</b> a ser
                             desconsiderada :</label>
-                        <input class="form form-control" type="number" name="fog_lenha_metrag_telh" step="0.01">
+                        <input class="form form-control" type="number" name="fog_lenha_metrag_telh" step="0.01" value="0">
                     </div><br>
 
 
                     <div id="div_comprimento_calha" class="hidden">
                         <label>14.2) Caso houver fogão a lenha, informe o comprimento da <b>calha</b> a ser
                             desconsiderada :</label>
-                        <input class="form form-control" type="number" name="fog_lenha_metrag_calha" step="0.01">
+                        <input class="form form-control" type="number" name="fog_lenha_metrag_calha" step="0.01" value="0">
                     </div>
                 </div>
             </div>
@@ -276,7 +277,7 @@
 
                 <div class="col-12 p-2 border">
                     <!-- We'll transform this input into a pond -->
-                    <input type="file" name="img[]" class="filepond img" multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="4">
+                    <input type="file" name="img[]" class="filepond img" multiple data-allow-reorder="true" data-max-file-size="3MB" data-max-files="4" required>
                 </div>
                 <br>
             </div>
@@ -326,6 +327,7 @@
 <script src="..\node_modules\popper.js\dist\umd\popper.min.js"></script>
 <script src="..\vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script>
 <script src="..\node_modules\select2\dist\js\select2.full.js"></script>
+<script src="..\node_modules\toastr\toastr.min.js"></script>
 <!-- Load FilePond library -->
 <script>
 $('.js-example-basic-single').select2();
@@ -352,6 +354,14 @@ $.fn.filepond.setDefaults({
 
 
 $(document).ready(function() {
+
+    toastr.error('rere');
+
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "showDuration": "800",
+    }
 
     $("#observacoes").keyup(function() {
         var leng = $("#observacoes").val().length;
@@ -430,13 +440,16 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    //    todo the logic
-                    // remove the files from filepond, etc
-                    //console.log(data);
+                    if(data.type == 'success') {
+                        alert(data.message);
+                        window.location.href = 'cadatro/show';
+                    }else if(data.type == 'error') {
+                        alert(data.message);
+                    }
                 },
                 error: function(data) {
-                    //    todo the logic
-                    //console.log(data);
+                    console.log(data);
+
                 }
             });
 

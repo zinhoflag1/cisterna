@@ -91,7 +91,8 @@
             print "<td>" . $registro['municipio'] . "</td>";
             print "<td>" . $registro['comunidade'] . "</td>";
             print "<td><a href='/cadastro/edit/".$registro['id']."' title='Editar registro'><img width='25' src='/images/edit.png'></a>
-                <a href='#' title='Deletar Registro'><img  width='25' src='/images/delete.png'></a></td>";
+                <a href='#' title='Deletar Registro'><img  width='25' src='/images/delete.png'></a>
+                <a href='cadastro/show/".$registro['id']."' title='Visualizar Registro'><img  width='25' src='/images/report.png'></a></td>";
             print "</tr>";
           }
 
@@ -127,79 +128,6 @@
   <script src="..\node_modules\filepond-plugin-file-rename\dist\filepond-plugin-file-rename.js"></script>
   <script type='modulo' src="..\node_modules\filepond\locale\pt-br.js"></script>
 
-  <script>
-    $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
-    //$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
-    //$.fn.filepond.registerPlugin(FilePondPluginFileRename);
-
-    $.fn.filepond.setDefaults({
-      maxFileSize: '3MB',
-    });
-
-
-    $(document).ready(function() {
-
-      $('.img').filepond({
-        allowMultiple: true,
-        allowImagePreview: false,
-        maxFiles: '4',
-        locale: 'pt_BR',
-        maxParallelUploads: '2',
-        credits: 'CEDEC-MG',
-        labelIdle: 'Arraste o arquivo ou <span class="filepond--label-action"> Clique Aqui </span><br> Max. 4 arquivos',
-      })
-
-      $("#frm").submit(function(e) {
-        var fd = new FormData(this);
-        // append files array into the form data
-        pondFiles = $('.img').filepond('getFiles');
-        for (var i = 0; i < pondFiles.length; i++) {
-          fd.append('file[]', pondFiles[i].file);
-        }
-
-        $.ajax({
-          url: 'process.php',
-          type: 'POST',
-          data: fd,
-          dataType: 'JSON',
-          contentType: false,
-          cache: false,
-          processData: false,
-          success: function(data) {
-            //    todo the logic
-            // remove the files from filepond, etc
-          },
-          error: function(data) {
-            //    todo the logic
-          }
-        });
-        e.preventDefault();
-      });
-
-    });
-  </script>
-
-  <?php
-
-  $nome = isset($_POST['name']) ? $_POST['name'] : null;
-  $cpf  = isset($_POST['cpf'])  ? $_POST['cpf']  : null;
-  $btn  = isset($_POST['btn'])  ? $_POST['btn']  : null;
-  $files = isset($_POST['files']) ? $_POST['files'] : null;
-
-  if ($btn) {
-
-    if (isset($files)) {
-      foreach ($files as $key => $file) {
-        $fileName = 'img' . $cpf . "-" . time() . $key . '.' . $file->getClientOriginalExtension();
-        move_uploaded_file($file, 'img/' . $fileName);
-      }
-    }
-  }
-
-  ?>
-
+ 
 </body>
-
-
-
 </html>

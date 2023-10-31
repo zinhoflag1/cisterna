@@ -21,11 +21,11 @@ class Cadastro
   {
     $conn = new Database();
 
-    $post = $_POST;
+    $post = isset($_POST) ? $_POST: "";
 
-    $files = $_FILES['file'];
+    $files = isset($_FILES['file']) ? $_FILES['file'] : array();
 
-    var_dump($files);
+    //var_dump($files, $post);
 
     $dados = array();
 
@@ -47,17 +47,25 @@ class Cadastro
 
     $result = $conn->query($sql);
 
+    $mv = false;
     # upload imagens
-    if( $result && (count($files) > 0) ) {
-      foreach ($files as $key => $file) {
-        var_dump($file['tmp_name'], $key);
-        //move_uploaded_file($file['tmp_name'][$key], "/images/dd/".$file[$key]['name']);
+    if ($result && (count($files) > 0)) {
+
+      if (!file_exists("../imagens/" . $post['cpf'])) {
+        mkdir("../imagens/" . $post['cpf']);
       }
-    }else if($result){
-      return true;
+
+      //var_dump($files);
+      foreach ($files['tmp_name'] as $key => $file) {
+        $mv = move_uploaded_file($file, dirname($_SERVER['DOCUMENT_ROOT'], 1) . "/imagens/" . $post['cpf'] . "/foto" . $key . time() . ".php");
+      }
+
+      if ($mv) {
+        print  json_encode(['result' => true, 'type' => 'success', 'message' => 'Registro Gravado com sucesso !']);
+      }else {
+        print json_encode(['result' => true, 'type' => 'error', 'message' => 'Registro gravado, porem ocorreu um erro ao salvar as Fotos !', ]);
+      }
     } 
-
-
 
   }
 
@@ -76,4 +84,7 @@ class Cadastro
 
     return $result->fetch(PDO::FETCH_ASSOC);
   }
+
+
+ 
 }

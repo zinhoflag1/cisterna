@@ -7,11 +7,13 @@ class Cadastro extends Controller
 
   public $cadastro;
   public $municipio;
+  public $admin;
 
   public function __construct()
   {
     $this->municipio = $this->model('Municipio');
     $this->cadastro = $this->model('Cadastro');
+    $this->admin = $this->model('Admin');
   }
 
   public function create()
@@ -67,5 +69,20 @@ class Cadastro extends Controller
     //$cadastro = $this->cadastrar($_POST);
     //var_dump($cadastro);
 
+  }
+
+   /**
+   * Show
+   */
+  public function show($id) {
+
+    $cadastro = $this->cadastro::findById($id);
+
+    $campos = $this->admin::getFieldsTbl('pesquisa10', 'cadastro');
+
+    $this->view('cadastro/show', [
+      'cadastro' => $cadastro,
+      'campos'  => $campos,
+    ]);
   }
 }
