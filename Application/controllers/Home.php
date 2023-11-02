@@ -55,10 +55,11 @@ class Home extends Controller
       $post = $_POST;
 
       $reg = $this->home::select('cadastro', $post);
+      
 
     }else {
       # mostra total de registros no sistema
-      $reg = $this->home::findAll('cadastro');
+      $reg = $this->home::find();
     }
 
     

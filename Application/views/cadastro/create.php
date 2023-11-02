@@ -12,6 +12,16 @@
     <link ref="stylesheet" href="..\node_modules\toastr\toastr.min.css">
     <!-- Filepond stylesheet -->
     <link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F7F9D3;
+            color: #596988;
+        }
+
+        label.lb {
+            font-weight: bold;
+        }
+    </style>
 
     <title>Projeto - GMG/CEDEC</title>
 </head>
@@ -20,26 +30,23 @@
 
     <div class="container">
         <div class="row p-2">
-            <div class="col-12 text-center"><a class="btn btn-success btn-sm" href="home">Voltar</a></div>
+            <div class="col-12 text-center"><a class="btn btn-success btn-sm" href="/home">Voltar</a></div>
         </div>
-        <h4 class="text-center">Formulário de pesquisa para caracterização técnica</h4><br><br>
-        <span id="msg">-</span>
-        <br>
+        <h2 class="text-center">Formulário de pesquisa <br> caracterização técnica</h2><br>
 
-
-        <legend class="text-center">Dados do responsável pelo imóvel</legend>
+        <legend class="text-center">Dados do Responsável pelo Imóvel</legend>
         <br>
         <form action="store" method="post" enctype="multipart/form-data" name="frm" id="frm">
 
             <div class="row p-2 border">
-                <label>1) Latitude/Longitude</label>
+                <label class="lb">1) Latitude/Longitude</label>
                 <div class="col-12">
                     <input class="form form-control" type="text" name="lat_long" required maxlength="50"><br>
                 </div>
             </div>
             <br>
             <div class="row p-2 border">
-                <label>2) Nome completo:</label>
+                <label class="lb">2) Nome completo:</label>
                 <div class="col-12">
                     <input class="form form-control" type="text" name="nome" required><br>
 
@@ -47,20 +54,20 @@
             </div>
             <br>
             <div class="row p-2 border">
-                <label>3) CPF - Insira somente os números:</label>
+                <label class="lb">3) CPF - Insira somente os números:</label>
                 <div class="col-12">
                     <input class="form form-control" type="text" name="cpf" pattern="[0-9]{11}" maxlength="11" id="cpf" title="Insira apenas números. Ex: 98765432100" required><br>
                     <script>
-                    document.getElementById('cpf').addEventListener('input', function() {
-                        this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);
-                    });
+                        document.getElementById('cpf').addEventListener('input', function() {
+                            this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);
+                        });
                     </script>
                 </div>
             </div>
 
             <br>
             <div class="row p-2 border">
-                <label>4) Quantidade de pessoas que residem no imóvel:</label>
+                <label class="lb">4) Quantidade de pessoas que residem no imóvel:</label>
                 <div class="col-12">
                     <input class="form form-control" type="number" name="qtd_pessoa" min="1" required><br>
 
@@ -68,7 +75,7 @@
             </div>
             <br>
             <div class="row p-2 border">
-                <label>5) Renda familiar:</label>
+                <label class="lb">5) Renda familiar:</label>
                 <div class="col-12">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -78,20 +85,20 @@
                     </div>
 
                     <script>
-                    function formatarValor(input) {
-                        let valor = input.value.replace(/\D/g, '');
-                        valor = (valor / 100).toLocaleString('pt-BR', {
-                            minimumFractionDigits: 2
-                        });
-                        input.value = valor;
-                    }
+                        function formatarValor(input) {
+                            let valor = input.value.replace(/\D/g, '');
+                            valor = (valor / 100).toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2
+                            });
+                            input.value = valor;
+                        }
                     </script>
                 </div>
             </div>
 
             <br>
             <div class="row p-2 border">
-                <label>6) Marque a situação da residência:</label><br>
+                <label class="lb">6) Marque a situação da residência:</label><br>
                 <div class="col-12">
                     <div style="display: flex; flex-wrap: wrap;">
                         <div style="flex: 0 0 50%; max-width: 50%;">
@@ -110,7 +117,7 @@
             <legend class="text-center">Localização da imóvel</legend>
             <br>
             <div class="row p-2 border">
-                <label>7) Nome do Município:</label>
+                <label class="lb">7) Nome do Município:</label>
                 <div class="col-12">
                     <select class="js-example-basic-single form form-control" type=text name="municipio" required>
                         <option value="0">Escolha um Município</option>
@@ -126,7 +133,7 @@
             <br>
 
             <div class="row p-2 border">
-                <label>8) Nome da Comunidade:</label>
+                <label class="lb">8) Nome da Comunidade:</label>
                 <div class="col-12">
                     <input class="form form-control" type=text name="comunidade" required><br>
 
@@ -135,7 +142,7 @@
 
             <br>
             <div class="row p-2 border">
-                <label>9) Endereço Completo:</label>
+                <label class="lb">9) Endereço Completo:</label>
                 <div class="col-12">
                     <input class="form form-control" type=text name="endereco"><br>
                 </div>
@@ -148,7 +155,7 @@
             <div class="row p-2 border">
                 <div class="col-12">
                     <br>
-                    <label>10) Informe a área total do telhado (m²):</label>
+                    <label class="lb">10) Informe a área total do telhado (m²):</label>
                     <input class="form form-control" type="number" min="1" step="0.01" name="area_telhado" required><br>
 
                 </div>
@@ -158,7 +165,7 @@
             <div class="row p-2 border">
                 <div class="col-12">
                     <br>
-                    <label>11) Informe o comprimento total das testadas:</label>
+                    <label class="lb">11) Informe o comprimento total das testadas:</label>
                     <input class="form form-control" type="number" name="comp_testada" min="1" step="0.01" required><br>
                 </div>
             </div>
@@ -166,13 +173,13 @@
             <br>
             <div class="row p-2 border">
                 <div class="col-12">
-                    <label>12) Quantas caídas possui o telhado?</label>
+                    <label class="lb">12) Quantas caídas possui o telhado?</label>
                     <input class="form form-control" type="number" name="num_caida" min="1" required><br>
                 </div>
             </div>
 
             <br>
-            <label>13) Marque o material da cobertura do imóvel:</label><br>
+            <label class="lb">13) Marque o material da cobertura do imóvel:</label><br>
             <div class="row p-2 border">
                 <div class="col-6">
                     <input type="checkbox" id="pvc" name="ck_pvc" value="1">
@@ -211,14 +218,14 @@
                     <label for="fogaoLenhaNao">Não</label><br>
 
                     <div id="div_metragem_telhado" class="hidden">
-                        <label>14.1) Caso houver fogão a lenha, informe a metragem do <b>telhado</b> a ser
+                        <label class="lb">14.1) Caso houver fogão a lenha, informe a metragem do <b>telhado</b> a ser
                             desconsiderada :</label>
                         <input class="form form-control" type="number" name="fog_lenha_metrag_telh" step="0.01" value="0">
                     </div><br>
 
 
                     <div id="div_comprimento_calha" class="hidden">
-                        <label>14.2) Caso houver fogão a lenha, informe o comprimento da <b>calha</b> a ser
+                        <label class="lb">14.2) Caso houver fogão a lenha, informe o comprimento da <b>calha</b> a ser
                             desconsiderada :</label>
                         <input class="form form-control" type="number" name="fog_lenha_metrag_calha" step="0.01" value="0">
                     </div>
@@ -239,7 +246,7 @@
 
                     <div id="div_fornecimento_agua" class="" style="display: flex; flex-wrap: wrap;">
                         <div style="flex: 0 0 50%; max-width: 50%;">
-                            <label>15.1) Selecione a opção do responsável pelo fornecimento de água:</label><br>
+                            <label class="lb">15.1) Selecione a opção do responsável pelo fornecimento de água:</label><br>
 
                             <input type="radio" id="DefesaCivil" name="responsavel_fornec_pipa" value="DefesaCivil">
                             <label for="DefesaCivil">Defesa Civil</label>
@@ -263,14 +270,14 @@
 
             <div class="row p-2 border">
                 <div class="col-12">
-                    <label>16) São obrigatórias 3 (três) fotos do imóvel e 1 (uma) opcional, sendo: </label><br>
+                    <label class="lb">16) São obrigatórias 3 (três) fotos do imóvel e 1 (uma) opcional, sendo: </label><br>
 
 
-                    <label>&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> 2 fotos da parte externa da
+                    <label class="lb">&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> 2 fotos da parte externa da
                         casa, com ênfase no telhado;</label><br>
-                    <label>&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> 1 foto da parte externa da
+                    <label class="lb">&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> 1 foto da parte externa da
                         casa, com ênfase no local da cisterna até a casa;</label><br>
-                    <label>&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> Outra</label><br><br>
+                    <label class="lb">&ensp;&ensp;&ensp;<span style="font-size: larger;">•</span> Outra</label><br><br>
                     <label"><i>Clique no ícone abaixo para registrar as fotos do imóvel</i></label>
                 </div>
 
@@ -286,15 +293,18 @@
             <legend class="text-center">Dados do Agente</legend>
             <br>
             <div class="row p-2 border">
-                <label>Nome do agente responsável pela pesquisa:</label>
+                <label class="lb">Nome do agente responsável pela pesquisa:</label>
                 <div class="col-12">
                     <input class="form form-control" type="text" name="agente_resp_pesquisa" required><br>
-
+                </div>
+            </div>
+            <br>
+            <div class="row p-2 border">
+                <label class="lb">Matrícula do agente responsável pela pesquisa:</label>
+                <div class="col-12">
                     <div id="MatriculaAgente" class="hidden">
-                        <label>Matrícula do agente responsável pela pesquisa:</label>
                         <input class="form form-control" type="text" name="matricula_agente" style="width: 100%;height: 38px; border: 1px solid #ccc;border-radius: 5px;" required>
-                    </div><br>
-
+                    </div>
                 </div>
             </div>
 
@@ -330,7 +340,7 @@
 <script src="..\node_modules\toastr\toastr.min.js"></script>
 <!-- Load FilePond library -->
 <script>
-$('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2();
 </script>
 
 <script src="..\node_modules\filepond\dist\filepond.min.js"></script>
@@ -344,85 +354,85 @@ $('.js-example-basic-single').select2();
 <script type='modulo' src="..\node_modules\filepond\locale\pt-br.js"></script>
 
 <script>
-$.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
-//$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
-//$.fn.filepond.registerPlugin(FilePondPluginFileRename);
+    $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
+    //$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
+    //$.fn.filepond.registerPlugin(FilePondPluginFileRename);
 
-$.fn.filepond.setDefaults({
-    maxFileSize: '3MB',
-});
-
-
-$(document).ready(function() {
-
-    toastr.error('rere');
-
-    toastr.options = {
-        "closeButton": true,
-        "progressBar": true,
-        "showDuration": "800",
-    }
-
-    $("#observacoes").keyup(function() {
-        var leng = $("#observacoes").val().length;
-        $("#caracteres").text(leng);
-
+    $.fn.filepond.setDefaults({
+        maxFileSize: '3MB',
     });
 
-    var x = document.getElementById("msg");
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-            //x.innerText = "opa";
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
+    $(document).ready(function() {
+
+        toastr.error('rere');
+
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "showDuration": "800",
         }
-    }
 
-    function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-            " Longitude: " + position.coords.longitude + " <br>Precisão :" + position.coords.accuracy
-    }
+        $("#observacoes").keyup(function() {
+            var leng = $("#observacoes").val().length;
+            $("#caracteres").text(leng);
 
+        });
 
+        var x = document.getElementById("msg");
 
-
-    /*item 13  */
-    $("input[name='fogao_lenha']").change(function() {
-        var result = $(this).attr('id');
-        if (result == 'fogaoLenhaNao') {
-            $("#div_metragem_telhado").hide();
-            $("#div_comprimento_calha").hide();
-        } else {
-            $("#div_metragem_telhado").show();
-            $("#div_comprimento_calha").show();
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+                //x.innerText = "opa";
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
         }
-    });
 
-    /* item */
-    $("input[name='fornecimento_pipa']").change(function() {
-        var result = $(this).attr('id');
-        if (result == 'aguaNao') {
-            $("#div_fornecimento_agua").hide();
-        } else {
-            $("#div_fornecimento_agua").show();
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                " Longitude: " + position.coords.longitude + " <br>Precisão :" + position.coords.accuracy
         }
-    });
-
-    $('.img').filepond({
-        allowMultiple: true,
-        allowImagePreview: false,
-        maxFiles: '4',
-        locale: 'pt_BR',
-        maxParallelUploads: '2',
-        credits: 'CEDEC-MG',
-        labelIdle: 'Arraste o arquivo ou <span class="filepond--label-action"> Clique Aqui </span><br> Max. 4 arquivos',
-    })
 
 
-    
-    $("#frm").submit(function(e) {
+
+
+        /*item 13  */
+        $("input[name='fogao_lenha']").change(function() {
+            var result = $(this).attr('id');
+            if (result == 'fogaoLenhaNao') {
+                $("#div_metragem_telhado").hide();
+                $("#div_comprimento_calha").hide();
+            } else {
+                $("#div_metragem_telhado").show();
+                $("#div_comprimento_calha").show();
+            }
+        });
+
+        /* item */
+        $("input[name='fornecimento_pipa']").change(function() {
+            var result = $(this).attr('id');
+            if (result == 'aguaNao') {
+                $("#div_fornecimento_agua").hide();
+            } else {
+                $("#div_fornecimento_agua").show();
+            }
+        });
+
+        $('.img').filepond({
+            allowMultiple: true,
+            allowImagePreview: false,
+            maxFiles: '4',
+            locale: 'pt_BR',
+            maxParallelUploads: '2',
+            credits: 'CEDEC-MG',
+            labelIdle: 'Arraste o arquivo ou <span class="filepond--label-action"> Clique Aqui </span><br> Max. 4 arquivos',
+        })
+
+
+
+        $("#frm").submit(function(e) {
 
             var fd = new FormData(this);
             // append files array into the form data
@@ -440,10 +450,10 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    if(data.type == 'success') {
+                    if (data.type == 'success') {
                         alert(data.message);
                         window.location.href = 'cadatro/show';
-                    }else if(data.type == 'error') {
+                    } else if (data.type == 'error') {
                         alert(data.message);
                     }
                 },
@@ -454,9 +464,9 @@ $(document).ready(function() {
             });
 
             e.preventDefault();
-    });
+        });
 
-});
+    });
 </script>
 
 </body>

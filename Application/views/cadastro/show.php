@@ -25,6 +25,7 @@
         <div class="row p-2">
             <div class="col-12 text-center"><a class="btn btn-success btn-sm" href="/home">Voltar</a></div>
         </div>
+
         <h4 class="text-center">Visualização de Registro</h4><br><br>
         <span id="msg">-</span>
         <br>
@@ -49,24 +50,23 @@
 
         ?>
 
-        <legend>Imagens Relacionadas</legend>
+        <legend class="text-center">Imagens Relacionadas</legend>
 
         <?php
 
         $img_path = dir(dirname(__DIR__, 3) . "/imagens/" . $data['cadastro']['cpf']);
 
         print "<div class='row p-2'>";
-        while ($file = $img_path->read()) {
+            while ($file = $img_path->read()) {
 
-            if ($file != "." && $file != "..") {
+                if ($file != "." && $file != "..") {
 
-                print "<div class='col p-2'>
-                <div class='col border p-2'>
-                    <img src='" . dirname(__DIR__, 3) . "/imagens/" . $data['cadastro']['cpf'] . "/" . $file . "/>
-                </div>
-                </div>";
+                    print "<div class='col border p-2 text-center'>
+                                <img class='img-fluid rounded' src='/imagens/".$data['cadastro']['cpf']."/" . $file . "'/>
+                            </div>&nbsp;";
+                }
             }
-        }
+        print "</div>";
         ?>
 
     </div>

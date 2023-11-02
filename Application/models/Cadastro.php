@@ -21,7 +21,7 @@ class Cadastro
   {
     $conn = new Database();
 
-    $post = isset($_POST) ? $_POST: "";
+    $post = isset($_POST) ? $_POST : "";
 
     $files = isset($_FILES['file']) ? $_FILES['file'] : array();
 
@@ -61,12 +61,91 @@ class Cadastro
       }
 
       if ($mv) {
-        print  json_encode(['result' => true, 'type' => 'success', 'message' => 'Registro Gravado com sucesso !']);
-      }else {
-        print json_encode(['result' => true, 'type' => 'error', 'message' => 'Registro gravado, porem ocorreu um erro ao salvar as Fotos !', ]);
+        print json_encode([
+                            'result'  => true,
+                            'type'    => 'success',
+                            'message' => 'Registro Gravado com sucesso !',
+                          ]);
+      } else {
+        print json_encode([
+                          'result'  => true,
+                          'type'    => 'error',
+                          'message' => 'Registro gravado, porem ocorreu um erro ao salvar as Fotos !',
+                        ]);
       }
-    } 
+    }
+  }
 
+
+  public static function atualizar()
+  {
+    $conn = new Database();
+
+    $post = isset($_POST) ? $_POST : "";
+
+    $files = isset($_FILES['file']) ? $_FILES['file'] : array();
+
+    $dados = "";
+
+    # tratar dados
+    foreach ($post as $key => $dado) {
+      if ($key != 'img') {
+        if ($key == 'renda_total') {
+          $dados .= $key. '="'.str_replace(",", ".", str_replace(".", "", $dado)).'", ';
+        } else {
+          if(array_key_last($post) == $key) {
+            $dados .= $key. '="'. $dado.'"';
+          }else {
+            $dados .= $key. '="'. $dado.'",';
+          }
+        }
+      }
+    }
+
+
+    $sql = "UPDATE cadastro set " . $dados." Where id =".$post['id'];
+
+    $result = $conn->query($sql);
+
+    $mv = false;
+    # upload imagens
+    if ($result && (count($files) > 0)) {
+
+      if (!file_exists("../imagens/" . $post['cpf'])) {
+        mkdir("../imagens/" . $post['cpf']);
+      }
+
+      //var_dump($files);
+      foreach ($files['tmp_name'] as $key => $file) {
+        $mv = move_uploaded_file($file, dirname($_SERVER['DOCUMENT_ROOT'], 1) . "/imagens/" . $post['cpf'] . "/foto" . $key . time() . ".php");
+      }
+
+      if ($mv) {
+        print  json_encode([
+                            'result'  => true,
+                            'type'    => 'success',
+                            'message' => 'Registro Gravado com sucesso !',
+                            'id'      => $post['id'],
+                          ]);
+      } else {
+        print json_encode([
+                            'result'  => true,
+                            'type'    => 'error',
+                            'message' => 'Registro gravado, porem ocorreu um erro ao salvar as Fotos !',
+                            'id'      => $post['id'],
+                          ]);
+      }
+    }else {
+
+      if($result){
+        print  json_encode([
+                            'result'  => true,
+                            'type'    => 'success',
+                            'message' => 'Registro Atualizado com sucesso !',
+                            'id'      => $post['id'],
+                          ]);
+      }
+    }
   }
 
 
@@ -86,5 +165,15 @@ class Cadastro
   }
 
 
- 
+  public static function deletar($file)
+  {
+
+   // var_dump(file_exists('../'.$file));
+
+    //die();
+
+    if (file_exists('../'.$file)) {
+      return unlink($_SERVER['DOCUMENT_ROOT'].$file);
+    }
+  }
 }

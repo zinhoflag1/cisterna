@@ -22,6 +22,8 @@ class Home
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
+
+
   /**
    * Este método busca um usuário armazenados na base de dados com um
    * determinado ID
@@ -39,6 +41,10 @@ class Home
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  
+/**
+ * 
+ */
 
   public static function select($table, array $param = null)
   {
@@ -47,7 +53,10 @@ class Home
     $nome = isset($param['nome']) ? $param['nome'] : "";
     $cpf  = isset($param['cpf'])  ? $param['cpf']  : "";
 
-    $sql = "Select * from " . $table . " WHERE ";
+    $sql = "SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
+    FROM cadastro
+    INNER JOIN municipio 
+    ON cadastro.municipio = municipio.id WHERE ";
 
     # busca parte do Nome
     if ((!empty($nome)) && (empty($cpf))) {
@@ -65,4 +74,19 @@ class Home
 
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
+
+
+  public static function find()
+  {
+    $conn = new Database();
+    $result = $conn->query('SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
+                            FROM cadastro
+                            INNER JOIN municipio 
+                            ON cadastro.municipio = municipio.id');
+
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+
+  
 }
