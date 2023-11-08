@@ -2,17 +2,19 @@
 
 ##### INSTALAR PROGRAMAS #####
 
-- APK SERVIDORES
-- APK LATITUDE E LONGITUDE
+- APK Nome: KSWEB ES
+- APK Nome : LATITUDE E LONGITUDE
 - APK FOTO
 
 # MYSQL
 mysql senha :
-
+porta : 3306
 # APACHE
 
-# FTP
+porta : 8000
 
+# FTP
+porta 2121
 
 
 
@@ -20,6 +22,11 @@ mysql senha :
 
 # root Apache
     public
+
+
+
+
+    atualizei o codigo
 
 # dar permissao escrita pasta
     imagens
