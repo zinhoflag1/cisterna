@@ -2,47 +2,23 @@
 
 namespace Application\core;
 
+
 use Exception;
 use PDO;
+use SQLite3;
 
-class Database extends PDO
+class Sqlite extends SQLite3
 {
-
-  // configuração do banco de dados
-  private $DB_NAME = 'pesquisa10';
-  private $DB_USER = 'root';
-
-
-  private $DB_HOST = 'localhost';
-  #private $DB_PASSWORD = ''; #cedec
-  //private $DB_PORT = 3307; #cedec / notebook
-  private $DB_PASSWORD = '12345678'; # casa notebook
-  private $DB_PORT = 3306; # casa
-
 
   // armazena a conexão
   public $conn;
 
   public function __construct()
   {
+    $data = new Config();
 
-      try {
+      $this->open(dirname(__DIR__, 2).'/db/'.$data->DB.$data->DEVICE.'.db');
 
-        parent::__construct(
-          "mysql:dbname=$this->DB_NAME;host=$this->DB_HOST;port=$this->DB_PORT",
-          $this->DB_USER,
-          $this->DB_PASSWORD,
-          array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
-        );
-      } catch (Exception $e) {
-
-        parent::__construct(
-          "mysql:host=$this->DB_HOST;port=$this->DB_PORT",
-          $this->DB_USER,
-          $this->DB_PASSWORD,
-          array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
-        );
-      }
   }
 
   // /**

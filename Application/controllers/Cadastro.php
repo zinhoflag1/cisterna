@@ -19,6 +19,7 @@ class Cadastro extends Controller
   public function create()
   {
 
+    
     $municipios = $this->municipio::findAll();
 
     $this->view('cadastro/create', [

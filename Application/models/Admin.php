@@ -2,24 +2,42 @@
 
 namespace Application\models;
 
+
+use Application\core\Config;
 use Application\core\Database;
+use Application\core\Sqlite;
 use Exception;
 use PDO;
 
 class Admin
 {
-
   /**
    * Cria o Banco de Dados
    *
    * @return void
    */
-  public static function createDatabase($db)
+  public static function createDatabase()
   {
-
     error_reporting(E_ALL);
-    $conn = new Database();
-    return $conn->query("CREATE DATABASE IF NOT EXISTS `" . $db . "`");
+
+    $config = new Config();
+
+
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+      $conn = new Database();
+      return $conn->query("CREATE DATABASE IF NOT EXISTS `" . $config->DB . $config->DEVICE . "`");
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+      $conn = new Sqlite();
+
+      if (!$conn) {
+        echo $conn->lastErrorMsg();
+      } else {
+        //echo "Opened database successfully\n";
+      }
+    }
   }
 
 
@@ -31,21 +49,52 @@ class Admin
 
     error_reporting(E_ALL);
 
-    $conn = new Database();
-    $result = $conn->query('SHOW TABLES');
+    $config = new Config();
 
-    $tables = $result->fetchAll();
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
 
-    if (isset($table)) {
-      foreach ($tables as $key => $table) {
-        if ($table[0] == $tbl) {
-          return true;
-        } else {
-          return false;
+      $conn = new Database();
+      $result = $conn->query('SHOW TABLES');
+
+      $tables = $result->fetchAll();
+
+      if (isset($table)) {
+        foreach ($tables as $key => $table) {
+          if ($table[0] == $tbl) {
+            return true;
+          } else {
+            return false;
+          }
         }
+      } else {
+        return false;
       }
-    } else {
-      return false;
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+
+
+      $conn = new Sqlite();
+
+      $sql = "SELECT name FROM sqlite_schema
+      WHERE type='table' AND name = '{$tbl}'";
+
+      $result = $conn->query($sql);
+      
+      if ($result) {
+
+        while ($linha = $result->fetchArray(SQLITE3_ASSOC)) {
+
+         if ($linha['name'] == $tbl) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else {
+        return false;
+      }
     }
   }
 
@@ -61,9 +110,16 @@ class Admin
 
     error_reporting(E_ALL);
 
-    $conn = new Database();
 
-    $sql = "CREATE TABLE IF NOT EXISTS `cadastro` (
+    $config = new Config();
+
+
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+
+      $sql = "CREATE TABLE IF NOT EXISTS `cadastro` (
       `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
       `nome` varchar(70) NOT NULL DEFAULT '' COMMENT 'Nome do Morador',
       `cpf` varchar(12) NOT NULL DEFAULT '' COMMENT 'Cpf do Morador',
@@ -99,10 +155,57 @@ class Admin
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ";
 
-    try {
-      return $conn->query($sql);
-    } catch (Exception $e) {
-      return $e->getMessage();
+      try {
+        return $conn->query($sql);
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $conn = new Sqlite();
+
+      $sql = "CREATE TABLE IF NOT EXISTS `cadastro` (
+      id INTEGER NOT NULL,
+      nome TEXT NOT NULL,
+      cpf TEXT NOT NULL,
+      qtd_pessoa INTEGER NOT NULL DEFAULT 1,
+      renda_total NUMERIC NOT NULL DEFAULT 0.00,
+      tipo_moradia TEXT NOT NULL DEFAULT '0',
+      endereco TEXT DEFAULT NULL DEFAULT 'Endereço',
+      comunidade TEXT NOT NULL DEFAULT 'Comunidade',
+      municipio TEXT NOT NULL DEFAULT 'Município',
+      area_telhado NUMERIC NOT NULL DEFAULT 0.00,
+      comp_testada NUMERIC NOT NULL DEFAULT 0.00,
+      num_caida INTEGER NOT NULL DEFAULT 0,
+      ck_amianto INTEGER NOT NULL DEFAULT 0,
+      ck_pvc INTEGER NOT NULL DEFAULT 0,
+      ck_concreto INTEGER NOT NULL DEFAULT 0,
+      ck_ceramica INTEGER NOT NULL DEFAULT 0,
+      ck_fib_cimento INTEGER NOT NULL DEFAULT 0,
+      ck_zinco INTEGER NOT NULL DEFAULT 0,
+      ck_metalico INTEGER NOT NULL DEFAULT 0,
+      ck_outros INTEGER NOT NULL DEFAULT 0,
+      descr_out_tp_material TEXT DEFAULT NULL,
+      fogao_lenha INTEGER NOT NULL DEFAULT 0,
+      fog_lenha_metrag_telh INTEGER NOT NULL DEFAULT 0,
+      fog_lenha_metrag_calha INTEGER NOT NULL DEFAULT 0,
+      fornecimento_pipa INTEGER NOT NULL DEFAULT 0,
+      responsavel_fornec_pipa TEXT DEFAULT NULL ,
+      agente_resp_pesquisa TEXT NOT NULL,
+      matricula_agente TEXT NOT NULL,
+      obs TEXT DEFAULT NULL,
+      dt_cadastro NUMERIC NOT NULL,
+      lat_long TEXT NOT NULL,
+      PRIMARY KEY (id AUTOINCREMENT)
+      )";
+
+      try {
+        return $conn->query($sql);
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
     }
   }
 
@@ -114,9 +217,15 @@ class Admin
 
   public static function createTblMunicipio()
   {
-    $conn = new Database();
 
-    $sql = "CREATE TABLE IF NOT EXISTS `municipio` (
+    $config = new Config();
+
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+
+      $sql = "CREATE TABLE IF NOT EXISTS `municipio` (
         `id` int(11) NOT NULL COMMENT 'Identificador do Municipio',
         `nome` varchar(30) DEFAULT NULL COMMENT 'Nome do Municipio',
         `macroregiao` varchar(255) DEFAULT NULL COMMENT 'Macroregiao do Estado',
@@ -154,13 +263,64 @@ class Admin
       ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
       ";
 
-    try {
-      $result =  $conn->prepare($sql);
-      return $result->execute();
-    } catch (Exception $e) {
-      return $e->getMessage();
+      try {
+        $result =  $conn->prepare($sql);
+        return $result->execute();
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $conn = new Sqlite();
+
+      $sql = "CREATE TABLE IF NOT EXISTS municipio (
+        id INTEGER NOT NULL,
+        nome TEXT DEFAULT NULL,
+        macroregiao TEXT DEFAULT NULL,
+        latitude TEXT DEFAULT NULL,
+        longitude TEXT DEFAULT NULL,
+        latitude_dec NUMERIC DEFAULT NULL,
+        longitude_dec NUMERIC DEFAULT NULL ,
+        distancia_bh NUMERIC DEFAULT 0,
+        populacao NUMERIC DEFAULT 0,
+        territorio_desenv TEXT DEFAULT NULL,
+        tel TEXT DEFAULT NULL,
+        fax TEXT DEFAULT NULL ,
+        endereco TEXT DEFAULT NULL,
+        bairro TEXT DEFAULT NULL,
+        cep TEXT DEFAULT NULL,
+        email TEXT DEFAULT NULL,
+        tel_pref TEXT DEFAULT NULL,
+        cel_pref TEXT DEFAULT NULL ,
+        pop_rural INTEGER DEFAULT 0,
+        qtd_pipa INTEGER DEFAULT 0,
+        prefeito TEXT DEFAULT NULL ,
+        area TEXT DEFAULT NULL,
+        aliquota_iss NUMERIC DEFAULT NULL,
+        resp_cob_iss TEXT DEFAULT NULL,
+        num_lei_iss TEXT DEFAULT NULL,
+        cobra_iss TEXT DEFAULT NULL,
+        CodUf TEXT DEFAULT NULL,
+        Codmundv TEXT DEFAULT NULL,
+        Codmun TEXT DEFAULT NULL,
+        id_meso INTEGER DEFAULT NULL,
+        id_micro INTEGER DEFAULT NULL,
+        NOME_IBGE TEXT DEFAULT NULL,
+        semi_arido NUMERIC DEFAULT 0
+        
+      )";
+
+      try {
+        $result =  $conn->prepare($sql);
+        return $result->execute();
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
     }
   }
+
 
 
   /**
@@ -171,24 +331,52 @@ class Admin
   public static function createTblRpmMun()
   {
 
-    $conn = new Database();
+    $config = new Config();
 
-    $sql = "CREATE TABLE IF NOT EXISTS `rpm_mun` (
-      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+
+      $sql = "CREATE TABLE IF NOT EXISTS `rpm_mun` (
+      `id` int(11) NOT NULL COMMENT 'Identificador',
       `nome` varchar(45) DEFAULT NULL COMMENT 'Nome Região',
       `unidade` varchar(45) DEFAULT NULL COMMENT 'Unidade Batalhão',
       `id_municipio` int(11) DEFAULT NULL COMMENT 'Identificador do Municipio',
       `id_rpm` int(11) DEFAULT NULL COMMENT 'Identificador da RPM',
       `rdc` varchar(45) DEFAULT NULL COMMENT 'Regial de Defesa Civil',
       PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
+    ) ENGINE=Innotrue DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Regional de DC dos Municipios';
     ";
 
-    try {
-      $result =  $conn->query($sql);
-      return $result;
-    } catch (Exception $e) {
-      return $e->getMessage();
+      try {
+        $result =  $conn->query($sql);
+        return $result;
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $conn = new Sqlite();
+
+      $sql = "CREATE TABLE IF NOT EXISTS `rpm_mun` (
+      id INTEGER NOT NULL,
+      nome TEXT DEFAULT NULL,
+      unidade TEXT DEFAULT NULL,
+      id_municipio INTEGER DEFAULT NULL,
+      id_rpm INTEGER DEFAULT NULL,
+      rdc TEXT DEFAULT NULL,
+      PRIMARY KEY (id AUTOINCREMENT)
+    )";
+
+      try {
+        $result =  $conn->query($sql);
+        return $result;
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
     }
   }
 
@@ -200,23 +388,51 @@ class Admin
   public static function importarFileSql($fileSql)
   {
 
-    $conn = new Database();
+    $config = new Config();
 
-    $filename = dirname(__DIR__, 2) . "/" . $fileSql . '.sql';
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
 
-    $sql = '';
+      $conn = new Database();
 
-    $lines = file($filename);
+      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE.'_'.$fileSql . '.sql';
 
-    foreach ($lines as $line) {
-      $sql .= $line;
-    }
+      $sql = '';
 
-    try {
-      $result = $conn->query($sql);
-      return $result;
-    } catch (Exception $e) {
-      return $e->getMessage();
+      $lines = file($filename);
+
+      foreach ($lines as $line) {
+        $sql .= $line;
+      }
+
+      try {
+        $result = $conn->query($sql);
+        return $result;
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $conn = new Sqlite();
+
+      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE.'_'.$fileSql . '.sql';
+
+      $sql = '';
+
+      $lines = file($filename);
+
+      foreach ($lines as $line) {
+        $sql .= $line;
+      }
+
+      try {
+        $result = $conn->query($sql);
+        return $result;
+      } catch (Exception $e) {
+        return $e->getMessage();
+      }
     }
   }
 
@@ -230,9 +446,19 @@ class Admin
    */
   public static function findAll()
   {
-    $conn = new Database();
-    $result = $conn->query('SELECT * FROM users');
-    return $result->fetchAll(PDO::FETCH_ASSOC);
+
+    $config = new Config();
+
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+      $result = $conn->query('SELECT * FROM users');
+      return $result->fetchAll(PDO::FETCH_ASSOC);
+
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+    }
   }
 
   /**
@@ -268,17 +494,24 @@ class Admin
   public static function getFieldsTbl($db, $table)
   {
 
-    $conn = new Database();
+    $config = new Config();
 
-    $sql = "select `column_name`, `column_type`, `column_default`, `column_comment`
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+
+      $sql = "select `column_name`, `column_type`, `column_default`, `column_comment`
     from `information_schema`.`COLUMNS` 
-    where `table_name` = '".$table."' 
-    and `table_schema` = '".$db."'";
+    where `table_name` = '" . $table . "' 
+    and `table_schema` = '" . $db . "'";
 
-    $result = $conn->query($sql);
+      $result = $conn->query($sql);
 
-    return $result->fetchAll(PDO::FETCH_ASSOC);
+      return $result->fetchAll(PDO::FETCH_ASSOC);
 
-
+      ## sqlite 
+    } elseif ($config->DRIVE == 'sqlite') {
+    }
   }
 }

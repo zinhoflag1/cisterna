@@ -21,7 +21,7 @@ class Home extends Controller
   public function index()
   {
 
-    $this->admin::createDatabase('pesquisa10');
+    $this->admin::createDatabase();
 
     $cadastro = $this->admin::verificaTbl('cadastro');
     $municipio = $this->admin::verificaTbl('municipio');
@@ -40,7 +40,9 @@ class Home extends Controller
     # cria a tabela no banco
     if (!$municipio) {
       $this->admin::createTblMunicipio();
+
       $this->admin::importarFileSql('municipio');
+      sleep(10);
     }
 
     # cria a tabela no banco

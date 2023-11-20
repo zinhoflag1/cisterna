@@ -16,7 +16,9 @@
 
 <body>
   <?php
-  
+
+use Application\core\Config;
+
   ?>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,29 +37,25 @@
         <li class="nav-item">
           <a class="nav-link" href="admin/sinc">Sincronizar</a>
         </li>
+
       </ul>
+      <span style="color: white;">Dispositivo : <?php $config = new Config(); print $config->DEVICE; ?></span>
 
     </div>
   </nav>
   <div class="container">
-    <div class="row p-2">
-      <div class="col-12">
-        -
-      </div>
-
-    </div>
 
     <form action="home" method="POST" name="frmPesquisa" id="frmPesquisa">
       <legend>Pesquisa</legend>
       <div class="row">
         <div class="col">
-            <label>Nome :</label>
+            <label>Nome Candidato :</label>
             <br>
             <span style="font-size: 9pt;">( Digite o Nome ou Parte )</span>
             <input type="text" id="nome" name="nome" class="form form-control"><br>
         </div>
         <div class="col">
-          <label>CPF :</label>
+          <label>CPF do Candidato :</label>
           <br>
           <span style="font-size: 9pt;">( Digite o CPF ou Parte )</span>
           <input type="text" class="form form-control" id="cpf" name="cpf">
@@ -66,12 +64,6 @@
       <input type="submit" value="Pesquisar" class="btn btn-primary btn-sm" name="btnPesquisar" id="btnPesquisar">
     </form>
 
-
-    <?php
-    //var_dump($_POST);
-    ?>
-
-    <br>
     <div class="row">
       <div class="col-12 responsive">
 

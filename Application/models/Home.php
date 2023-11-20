@@ -3,6 +3,9 @@
 namespace Application\models;
 
 use Application\core\Database;
+use Application\core\Sqlite;
+use Application\core\Config;
+
 use Exception;
 use PDO;
 
@@ -41,52 +44,94 @@ class Home
     return $result->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  
-/**
- * 
- */
+
+  /**
+   * 
+   */
 
   public static function select($table, array $param = null)
   {
-    $conn = new Database();
 
+    $config = new Config();
+
+    $dados =array();
+    
     $nome = isset($param['nome']) ? $param['nome'] : "";
     $cpf  = isset($param['cpf'])  ? $param['cpf']  : "";
-
+    
+    
     $sql = "SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
     FROM cadastro
     INNER JOIN municipio 
-    ON cadastro.municipio = municipio.id WHERE ";
+    ON cadastro.municipio = municipio.id ";
+
+
 
     # busca parte do Nome
     if ((!empty($nome)) && (empty($cpf))) {
-      $sql .= "nome like \"%" . $nome . "%\" ORDER BY nome";
+      $sql .= "WHERE nome like \"%" . $nome . "%\" ORDER BY nome";
       #busca parte do CPF
     } elseif ((empty($nome)) && (!empty($cpf))) {
-      $sql .= "cpf like \"%" . $cpf . "%\" ORDER BY nome";
+      $sql .= "WHERE cpf like \"%" . $cpf . "%\" ORDER BY nome";
       #busca parte do Nome e parte do CPF
     } else if ((!empty($nome)) && (!empty($cpf))) {
-      $sql .= "nome like \"%" . $nome . "%\" AND cpf = \"" . $cpf . "\" ORDER BY nome";
+      $sql .= "WHERE nome like \"%" . $nome . "%\" AND cpf = \"" . $cpf . "\" ORDER BY nome";
     }
 
+  if($config->DRIVE == 'mysql') {
+    $conn = new Database();
     $result = $conn->query($sql);
-
-
     return $result->fetchAll(PDO::FETCH_ASSOC);
+    
+  }elseif($config->DRIVE == 'sqlite') {
+
+    $conn = new Sqlite();
+    $result = $conn->query($sql);
+    
+    while($linha = $result->fetchArray(SQLITE3_ASSOC)) {
+
+      $dados[] = $linha;
+
+    }
+
+    return $dados;
+  }
+
+
   }
 
 
   public static function find()
   {
-    $conn = new Database();
-    $result = $conn->query('SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
+
+    $config = new Config();
+
+    ## mysql
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+      $result = $conn->query('SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
                             FROM cadastro
                             INNER JOIN municipio 
                             ON cadastro.municipio = municipio.id');
 
-    return $result->fetchAll(PDO::FETCH_ASSOC);
+      return $result->fetchAll(PDO::FETCH_ASSOC);
+
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $dados = array();
+
+      $conn = new Sqlite();
+      $result = $conn->query('SELECT cadastro.id, cadastro.nome, cadastro.cpf, cadastro.renda_total, cadastro.comunidade, municipio.nome AS municipio_nome
+                            FROM cadastro
+                            INNER JOIN municipio 
+                            ON cadastro.municipio = municipio.id');
+
+        while($linha = $result->fetchArray(SQLITE3_ASSOC)){
+          $dados[] = $linha;
+        }
+
+      return $dados;
+    }
   }
-
-
-  
 }

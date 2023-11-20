@@ -3,6 +3,8 @@
 namespace Application\models;
 
 use Application\core\Database;
+use Application\core\Config;
+use Application\core\Sqlite;
 use Exception;
 use PDO;
 
@@ -17,9 +19,26 @@ class Municipio
    */
   public static function findAll()
   {
-    $conn = new Database();
-    $result = $conn->query('SELECT * FROM municipio');
-    return $result->fetchAll(PDO::FETCH_ASSOC);
+    $config = new Config();
+
+    if ($config->DRIVE == 'mysql') {
+      $conn = new Database();
+      $result = $conn->query('SELECT * FROM municipio');
+      return $result->fetchAll(PDO::FETCH_ASSOC);
+
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $dados = array();
+      $conn = new Sqlite();
+      $result = $conn->query('SELECT * FROM municipio');
+
+      while($linha = $result->fetchArray(SQLITE3_ASSOC)){
+        $dados[] = $linha;
+      }
+
+      return $dados;
+
+    }
   }
 
   /**

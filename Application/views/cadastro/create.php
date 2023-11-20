@@ -339,14 +339,13 @@
 <script src="..\node_modules\select2\dist\js\select2.full.js"></script>
 <script src="..\node_modules\toastr\toastr.min.js"></script>
 <!-- Load FilePond library -->
-<script>
+ <script>
     $('.js-example-basic-single').select2();
-</script>
+</script> 
 
-<script src="..\node_modules\filepond\dist\filepond.min.js"></script>
+<script src="..\node_modules\filepond\dist\filepond.js"></script>
 <script src="..\node_modules\jquery-filepond\filepond.jquery.js"></script>
 
-<link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet" />
 <link href="..\node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.css" rel="stylesheet" />
 <script src="..\node_modules\filepond-plugin-image-preview\dist\filepond-plugin-image-preview.min.js"></script>
 <script src="..\node_modules\filepond-plugin-file-validate-size\dist\filepond-plugin-file-validate-size.min.js"></script>
@@ -358,20 +357,20 @@
     //$.fn.filepond.registerPlugin(FilePondPluginImagePreview);
     //$.fn.filepond.registerPlugin(FilePondPluginFileRename);
 
-    $.fn.filepond.setDefaults({
-        maxFileSize: '3MB',
-    });
+     $.fn.filepond.setDefaults({
+         maxFileSize: '3MB',
+     });
 
 
     $(document).ready(function() {
 
-        toastr.error('rere');
+        // toastr.error('rere');
 
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "showDuration": "800",
-        }
+        // toastr.options = {
+        //     "closeButton": true,
+        //     "progressBar": true,
+        //     "showDuration": "800",
+        // }
 
         $("#observacoes").keyup(function() {
             var leng = $("#observacoes").val().length;
@@ -422,7 +421,7 @@
 
         $('.img').filepond({
             allowMultiple: true,
-            allowImagePreview: false,
+            allowImagePreview: true,
             maxFiles: '4',
             locale: 'pt_BR',
             maxParallelUploads: '2',
