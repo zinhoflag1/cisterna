@@ -1,6 +1,7 @@
 <?php
 
 use Application\core\Controller;
+use Application\core\Config;
 
 class Cadastro extends Controller
 {
@@ -19,7 +20,7 @@ class Cadastro extends Controller
   public function create()
   {
 
-    
+
     $municipios = $this->municipio::findAll();
 
     $this->view('cadastro/create', [
@@ -76,8 +77,6 @@ class Cadastro extends Controller
   public function update()
   {
 
-    //$this->cadastro::atualizar();
-
     if ($this->cadastro::atualizar()) {
 
       print 'success';
@@ -94,9 +93,13 @@ class Cadastro extends Controller
   public function show($id)
   {
 
+    $config = new Config();
+
     $cadastro = $this->cadastro::findById($id);
 
-    $campos = $this->admin::getFieldsTbl('pesquisa10', 'cadastro');
+    $campos = $this->admin::getFieldsTbl($config->DRIVE, 'cadastro');
+
+    
 
     $this->view('cadastro/show', [
       'cadastro' => $cadastro,
@@ -116,6 +119,6 @@ class Cadastro extends Controller
   {
     $file = $_POST['file'];
 
-    return $this->cadastro::deletar($file);
+    var_dump( $this->cadastro::deletar($file));
   }
 }

@@ -69,13 +69,13 @@ class Home
 
     # busca parte do Nome
     if ((!empty($nome)) && (empty($cpf))) {
-      $sql .= "WHERE nome like \"%" . $nome . "%\" ORDER BY nome";
+      $sql .= "WHERE cadastro.nome like \"%" . $nome . "%\" ORDER BY cadastro.nome";
       #busca parte do CPF
     } elseif ((empty($nome)) && (!empty($cpf))) {
-      $sql .= "WHERE cpf like \"%" . $cpf . "%\" ORDER BY nome";
+      $sql .= "WHERE cadastro.cpf like \"%" . $cpf . "%\" ORDER BY cadastro.nome";
       #busca parte do Nome e parte do CPF
     } else if ((!empty($nome)) && (!empty($cpf))) {
-      $sql .= "WHERE nome like \"%" . $nome . "%\" AND cpf = \"" . $cpf . "\" ORDER BY nome";
+      $sql .= "WHERE cadastro.nome like \"%" . $nome . "%\" AND cadastro.cpf = \"" . $cpf . "\" ORDER BY cadastro.nome";
     }
 
   if($config->DRIVE == 'mysql') {

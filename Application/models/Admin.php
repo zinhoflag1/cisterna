@@ -81,12 +81,12 @@ class Admin
       WHERE type='table' AND name = '{$tbl}'";
 
       $result = $conn->query($sql);
-      
+
       if ($result) {
 
         while ($linha = $result->fetchArray(SQLITE3_ASSOC)) {
 
-         if ($linha['name'] == $tbl) {
+          if ($linha['name'] == $tbl) {
             return true;
           } else {
             return false;
@@ -395,7 +395,7 @@ class Admin
 
       $conn = new Database();
 
-      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE.'_'.$fileSql . '.sql';
+      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE . '_' . $fileSql . '.sql';
 
       $sql = '';
 
@@ -417,7 +417,7 @@ class Admin
 
       $conn = new Sqlite();
 
-      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE.'_'.$fileSql . '.sql';
+      $filename = dirname(__DIR__, 2) . "/db/import_db/" . $config->DRIVE . '_' . $fileSql . '.sql';
 
       $sql = '';
 
@@ -512,6 +512,63 @@ class Admin
 
       ## sqlite 
     } elseif ($config->DRIVE == 'sqlite') {
+
+      $dados = array();
+
+      $conn = new Sqlite();
+
+      $result = $conn->query("PRAGMA table_info(cadastro)");
+
+      $fields = [
+        'id'                            => 'Identificador',
+        'nome'                          => 'Nome do Morador',
+        'cpf'                           => 'Cpf do Morador',
+        'qtd_pessoa'                    => 'Quantidade de Pessoas na Residencia',
+        'renda_total'                   => 'Renda Familiar',
+        'tipo_moradia'                  => 'Tipo da Moradia',
+        'endereco'                      => 'Endereço do Morador',
+        'comunidade'                    => 'Nome da Comunidade',
+        'municipio'                     => 'Nome do Município',
+        'area_telhado'                  => 'Área do Telhado M²',
+        'comp_testada'                  => 'Comprimento da Testada',
+        'num_caida'                     => 'Número de Caídas',
+        'ck_amianto'                    => 'Tipo Construção Amianto',
+        'ck_pvc'                        => 'Tipo Construção PVC',
+        'ck_concreto'                   => 'Tipo Construção Concreto',
+        'ck_ceramica'                   => 'Tipo Construção Cerâmica',
+        'ck_fib_cimento'                => 'Tipo Constrição Fibrocimento',
+        'ck_zinco'                      => 'Tipo Construção Zinco',
+        'ck_metalico'                   => 'Tipo Construção Metálico',
+        'ck_outros'                     => 'Tipo Construção Outros Materiais',
+        'descr_out_tp_material'         => 'Descrição Outros Tipos Materiais',
+        'fogao_lenha'                   => 'Tem Fogão à Lenha',
+        'fog_lenha_metrag_telh'         => 'Metragem a Considedar caso tenha Fogão à Lenha',
+        'fog_lenha_metrag_calha'        => 'Metragem da Calha a Considedar caso tenha Fogão à Lenha',
+        'fornecimento_pipa'             => 'Há Fornecimento de Caminhão Pipa',
+        'responsavel_fornec_pipa'       => 'Responsável pelo Forncecimento de Caminhão Pipa',
+        'agente_resp_pesquisa'          => 'Agente Responsável pela Pesquisa',
+        'matricula_agente'              => 'Matricula do Agente',
+        'obs'                           => 'Observações',
+        'dt_cadastro'                   => 'Data Hora do Cadastro',
+        'lat_long'                      => 'Latitude /Longitude',
+      ];
+
+
+
+      while ($linha = $result->fetchArray(SQLITE3_ASSOC)) {
+
+        foreach ($fields as $key => $value) {
+
+          //var_dump($linha['name']);
+          if ($key == $linha['name']) {
+            $dados[]=[
+              'column_comment' => $value,
+              'column_name' => $linha['name'],
+            ];
+          }
+        }
+      }
+      return $dados;
     }
   }
 }

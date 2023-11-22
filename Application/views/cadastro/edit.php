@@ -321,7 +321,7 @@
 
 
 
-            $img_path = dir(dirname(__DIR__, 3) . "/imagens/" . $data['cadastro']['cpf']);
+            $img_path = dir($_SERVER['DOCUMENT_ROOT']. "/imagens/" . $data['cadastro']['cpf']);
 
             print "<div class='row p-2'>";
 
@@ -519,7 +519,8 @@
                     cache: false,
                     processData: false,
                     success: function(e) {
-                        window.location.reload();
+                        //window.location.reload();
+                        console.log(e+"opa");
                     },
                     error: function(e) {
                         //    todo the logic

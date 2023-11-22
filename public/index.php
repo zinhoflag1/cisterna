@@ -1,4 +1,5 @@
   <?php
+
     require '../Application/autoload.php';
 
     use Application\core\App;

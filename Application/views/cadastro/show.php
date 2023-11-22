@@ -18,9 +18,6 @@
 
 <body>
 
-    <?php
-    //var_dump($data['campos']);
-    ?>
     <div class="container">
         <div class="row p-2">
             <div class="col-12 text-center"><a class="btn btn-success btn-sm" href="/home">Voltar</a></div>
@@ -54,16 +51,16 @@
 
         <?php
 
-        $img_path = dir(dirname(__DIR__, 3) . "/imagens/" . $data['cadastro']['cpf']);
+        $img_path = dir($_SERVER['DOCUMENT_ROOT']. "/imagens/" . $data['cadastro']['cpf']);
 
-        print "<div class='row p-2'>";
+        print "<div class='row text-center'>";
             while ($file = $img_path->read()) {
 
-                if ($file != "." && $file != "..") {
 
-                    print "<div class='col border p-2 text-center'>
+                if ($file != "." && $file != "..") {
+        print "<div class='col-12 col-lg-6 border p-2 text-center'>
                                 <img class='img-fluid rounded' src='/imagens/".$data['cadastro']['cpf']."/" . $file . "'/>
-                            </div>&nbsp;";
+                            </div>";
                 }
             }
         print "</div>";

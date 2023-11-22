@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="..\vendor\twbs\bootstrap\dist\css\bootstrap.min.css">
     <link rel="stylesheet" href="..\node_modules\select2\dist\css\select2.css">
-    <link ref="stylesheet" href="..\node_modules\toastr\toastr.min.css">
+    <!--<link ref="stylesheet" href="..\node_modules\toastr\toastr.min.css">-->
     <!-- Filepond stylesheet -->
     <link href="..\node_modules\filepond\dist\filepond.css" rel="stylesheet">
     <style>
@@ -42,6 +42,7 @@
                 <label class="lb">1) Latitude/Longitude</label>
                 <div class="col-12">
                     <input class="form form-control" type="text" name="lat_long" required maxlength="50"><br>
+                    <input type="hidden" name="dt_cadastro" id="dt_cadastro" value="<?=date('Y-m-d h:i:s')?>"><br>
                 </div>
             </div>
             <br>
@@ -337,7 +338,7 @@
 <script src="..\node_modules\popper.js\dist\umd\popper.min.js"></script>
 <script src="..\vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script>
 <script src="..\node_modules\select2\dist\js\select2.full.js"></script>
-<script src="..\node_modules\toastr\toastr.min.js"></script>
+<!--<script src="..\node_modules\toastr\toastr.min.js"></script>-->
 <!-- Load FilePond library -->
  <script>
     $('.js-example-basic-single').select2();
@@ -451,9 +452,9 @@
                 success: function(data) {
                     if (data.type == 'success') {
                         alert(data.message);
-                        window.location.href = 'cadatro/show';
+                        window.location.href = '/cadastro/show/'+data.id;
                     } else if (data.type == 'error') {
-                        alert(data.message);
+                        alert(data.message+"-");
                     }
                 },
                 error: function(data) {

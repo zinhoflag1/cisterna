@@ -48,6 +48,7 @@ class App
   {
 
     if ( !empty($url[0]) && isset($url[0]) ) {
+
       if ( file_exists('../Application/controllers/' . ucfirst($url[0])  . '.php') ) {
         $this->controller = ucfirst($url[0]);
       } else {
