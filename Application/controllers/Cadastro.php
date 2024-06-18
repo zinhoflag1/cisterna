@@ -106,8 +106,7 @@ class Cadastro extends Controller
       'campos'  => $campos,
     ]);
   }
-
-
+  
   public function showImage($file)
   {
 
@@ -120,5 +119,26 @@ class Cadastro extends Controller
     $file = $_POST['file'];
 
     var_dump( $this->cadastro::deletar($file));
+  }
+
+
+  /**
+   * Show
+   */
+  public function showAll()
+  {
+
+    $config = new Config();
+
+    $cadastro = $this->cadastro::findAll();
+
+    $campos = $this->admin::getFieldsTbl($config->DRIVE, 'cadastro');
+
+    
+
+    $this->view('cadastro/sinc', [
+      'cadastro' => $cadastro,
+      'campos'  => $campos,
+    ]);
   }
 }

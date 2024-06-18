@@ -1,14 +1,17 @@
 <?php
 
 use Application\core\Controller;
+use Application\core\Config;
 
 class Admin extends Controller
 {
   public $admin;
+  public $cadastro;
 
   public function __construct()
   {
     $this->admin = $this->model('Admin');
+    $this->cadastro = $this->model('Cadastro');
   }
 
   /*
@@ -69,8 +72,19 @@ class Admin extends Controller
    */
   public function sinc()
   {
+    $config = new Config();
 
-    $this->view('sinc/index');
+    $cadastros = $this->cadastro::findAll();
+
+    $campos = $this->admin::getFieldsTbl($config->DRIVE, 'cadastro');
+
     
+
+    $this->view('sinc/index', [
+      'cadastros' => $cadastros,
+      'campos'  => $campos,
+    ]);
+
+   
   }
 }

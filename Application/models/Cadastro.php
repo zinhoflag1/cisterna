@@ -203,6 +203,32 @@ class Cadastro
     }
   }
 
+  public static function findAll()
+  {
+    $dados = array();
+
+    $config = new Config();
+
+    if ($config->DRIVE == 'mysql') {
+
+      $conn = new Database();
+      $result = $conn->query('SELECT * FROM cadastro');
+      return $result->fetchAll(PDO::FETCH_ASSOC);
+
+    } elseif ($config->DRIVE == 'sqlite') {
+
+      $conn = new Sqlite();
+      $result = $conn->query('SELECT * FROM cadastro');
+
+      while ($linha = $result->fetchArray(SQLITE3_ASSOC)) {
+
+        $dados = $linha;
+      }
+
+      return $dados;
+    }
+  }
+
 
   public static function deletar($file)
   {

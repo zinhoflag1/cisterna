@@ -40,6 +40,13 @@
                 <th scope="col">Column 3</th>
               </tr>
             </thead>
+
+            <?php
+
+            var_dump($data['cadastros']);
+
+            ?>
+            
             <tbody>
               <tr class="">
                 <td scope="row">R1C1</td>
