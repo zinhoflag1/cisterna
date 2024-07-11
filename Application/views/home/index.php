@@ -17,7 +17,7 @@
 <body>
   <?php
 
-use Application\core\Config;
+  use Application\core\Config;
 
   ?>
 
@@ -39,43 +39,42 @@ use Application\core\Config;
         </li>
 
       </ul>
-      <span style="color: white;">Dispositivo : <?php $config = new Config(); print $config->DEVICE; ?></span>
+      <span style="color: white;">Dispositivo : <?php $config = new Config();
+                                                print $config->DEVICE; ?></span>
 
     </div>
   </nav>
   <div class="container">
-
-    <form action="home" method="POST" name="frmPesquisa" id="frmPesquisa">
-      <legend>Pesquisa</legend>
-      <div class="row">
-        <div class="col">
-            <label>Nome Candidato :</label>
-            <br>
-            <span style="font-size: 9pt;">( Digite o Nome ou Parte )</span>
-            <input type="text" id="nome" name="nome" class="form form-control"><br>
-        </div>
-        <div class="col">
-          <label>CPF do Candidato :</label>
-          <br>
-          <span style="font-size: 9pt;">( Digite o CPF ou Parte )</span>
-          <input type="text" class="form form-control" id="cpf" name="cpf">
-        </div>
+    <div class="row">
+      <div class="col-12">
+        <form action="home" method="POST" name="frmPesquisa" id="frmPesquisa">
+          <legend>Pesquisa</legend>
+          <div class="row pb-2">
+            <div class="col-12 col-md-6">
+              <label>Nome Candidato :</label>
+              <span style="font-size: 9pt;">( Digite o Nome ou Parte )</span>
+              <input type="text" id="nome" name="nome" class="form form-control"><br>
+            </div>
+            <div class="col-12 col-md-6">
+              <label>CPF do Candidato :</label>
+              <span style="font-size: 9pt;">( Digite o CPF ou Parte )</span>
+              <input type="text" class="form form-control" id="cpf" name="cpf">
+            </div>
+          </div>
+          <input type="submit" value="Pesquisar" class="btn btn-primary btn-sm" name="btnPesquisar" id="btnPesquisar">
+        </form>
       </div>
-      <input type="submit" value="Pesquisar" class="btn btn-primary btn-sm" name="btnPesquisar" id="btnPesquisar">
-    </form>
+    </div>
 
     <div class="row">
-      <div class="col-12 responsive">
+      <div class="col-12 col-md-12 table-responsive-sm">
 
         Total de Registros : <?= $data['total_registros']; ?>
-        <table class="table table-bordered table-striped table-condensend table-sm alert-success">
+        <table class="table table-bordered table-striped table-sm alert-success">
           <tr>
             <th>#</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Renda Familiar</th>
-            <th>Município</th>
-            <th>Comunidade</th>
+            <th>Nome/Cpf</th>
+            <th>Município/Comunidade</th>
             <th>Ações</th>
           </tr>
 
@@ -84,13 +83,10 @@ use Application\core\Config;
           foreach ($data['registros'] as $key => $registro) {
             print "</tr>";
             print "<td>" . ($key + 1) . "</td>";
-            print "<td>" . $registro['nome'] . "</td>";
-            print "<td>" . $registro['cpf'] . "</td>";
-            print "<td>" . $registro['renda_total'] . "</td>";
-            print "<td>" . $registro['municipio_nome'] . "</td>";
-            print "<td>" . $registro['comunidade'] . "</td>";
+            print "<td>" . $registro['nome'] ."<br><i style='font-size:10pt'>" . $registro['cpf'] . "</i></td>";
+            print "<td style='font-size:10pt'>" . $registro['municipio_nome'] . "<br><i style='font-size:10pt'>" . $registro['comunidade'] . "</i></td>";
             print "<td><a href='/cadastro/edit/" . $registro['id'] . "' title='Editar registro'><img width='25' src='/images/edit.png'></a>
-                <a href='#' title='Deletar Registro'><img  width='25' src='/images/delete.png'></a>
+                <a href='#' title='Deletar Registro'><img  width='20' src='/images/delete.png'></a>
                 <a href='cadastro/show/" . $registro['id'] . "' title='Visualizar Registro'><img  width='25' src='/images/report.png'></a></td>";
             print "</tr>";
           }

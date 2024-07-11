@@ -18,13 +18,10 @@
 
   <div class="container">
     <div class="row p-2">
-      <div class="col-12 p-3 text-center">
+      <div class="col-12 col-md-6 p-3 text-center">
         <a href="/home" class="btn btn-success btn-sm">Voltar</a>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12 text-center">
+      <div class="col-12 col-md-6 text-center">
         <a href="#" class="btn btn-primary">Sincronizar Dados</a>
       </div>
     </div>
